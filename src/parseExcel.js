@@ -13,9 +13,9 @@ for(k in xls_s1) {
     }
 }
 
-for(let i = 2; i < xls_length; i++) {
+for(let i = 2; i <= xls_length; i++) {
     xls_content.push([]);
-    for(let j = 65; j < xls_end_char.charCodeAt(); j++) {
+    for(let j = 65; j <= xls_end_char.charCodeAt(); j++) {
         xls_content[i - 2].push(xls_s1[String.fromCharCode(j) + i].v);
     }
 }
