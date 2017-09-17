@@ -28,7 +28,7 @@ request(options, function(err, res, body) {
       originalPrice: $(this).find('.qg-detail .link .original-price i').text(),
       promoPrice: $(this).find('.qg-detail .link .promo-price em').text(),
       progress: $(this).find('.qg-detail .process .process-text .percent').text(),
-      url: $(this).attr('href')
+      url: 'https:' + $(this).attr('href')
     });
   });
 
