@@ -1,12 +1,15 @@
-var request = require('request');
-var cheerio = require('cheerio');
-var fs = require('fs');
-var iconv = require('iconv-lite');
+let request = require('request');
+let cheerio = require('cheerio');
+let fs = require('fs');
+let iconv = require('iconv-lite');
 
-//主站
-const HOME_PRE = 'http://cl.doud.pw/';
+// 主站
+const HOME_PRE = 'http://ss.wedid.us/';
+
+// 爬取页数
 const PAGE_SIZE = 2;
 
+// 配置
 var options = {
   url: HOME_PRE + 'thread0806.php?fid=15&search=&page=',
   headers: {
@@ -15,50 +18,75 @@ var options = {
   encoding: null
 };
 
+// 结果数组
 var lists = [];
-(function run(i) {
-  console.log('开始爬取数据……' + i);
-  options.url = HOME_PRE + 'thread0806.php?fid=15&search=&page=' + i,
+
+// 解析页面，返回获取到的数据
+function parsePage(pageIndex) {
+  console.log(`开始爬取第${pageIndex}页……`);
+  options.url = `${HOME_PRE}thread0806.php?fid=15&search=&page=${pageIndex}`;
+  return new Promise((resolve, reject) => {
     request(options, function(err, res, body) {
-      var html = iconv.decode(body, 'gbk');
-      var $ = cheerio.load(html, {
-        ignoreWhitespace: true,
-        xmlMode: true
-      });
-
-      var nowLists = $('#ajaxtable .tr3 .tal h3 a');
-
-      nowLists.each(function(index, elem) {
-        if (index > 3) {
-          lists.push({
-            content: $(this).text(),
-            preview_url: $(this).attr('href'),
-            download_url: ''
-          });
-        }
-      });
-
-      i++;
-      if (i <= PAGE_SIZE) {
-        run(i);
+      if (err) {
+        reject(err);
       } else {
-        console.log('成功爬取数据，开始写入文件……');
-        // lists.forEach(function(value, index) {
-        //   fs.appendFileSync('output.txt', '【' + (index + 1) + '】' + value.content + '\n' + HOME_PRE + value.url + '\n\n');
-        // });
-        (function writer(j) {
-          var data = '【' + (j + 1) + '】' + lists[j].content + '\n' + HOME_PRE + lists[j].preview_url + '\n\n';
-          fs.appendFile('output.txt', data, {
-            encoding: 'UTF8'
-          }, function() {
-            if (j + 1 < lists.length) {
-              writer(j + 1);
-            } else {
-              console.log('finish');
-              console.log('total:' + lists.length);
-            }
-          });
-        })(0);
+        var html = iconv.decode(body, 'gbk');
+        var $ = cheerio.load(html, {
+          ignoreWhitespace: true,
+          xmlMode: true
+        });
+
+        var $list = $('#ajaxtable .tr3 .tal h3 a');
+
+        var list = [];
+
+        $list.each(function(index, elem) {
+          if (index > 3) {
+            list.push({
+              content: $(this).text(),
+              preview_url: $(this).attr('href'),
+              download_url: ''
+            });
+          }
+        });
+        console.log(`爬取第${pageIndex}页成功\n`);
+        resolve(list);
       }
     });
-})(1);
+  });
+}
+
+// 获取所有页面数据
+async function getData() {
+  var arr = new Array(PAGE_SIZE);
+  for (let i = 0; i < arr.length; i++) {
+    var res = await parsePage(i + 1);
+    lists = lists.concat(res);
+  }
+  saveData(lists);
+}
+
+// 写入数据到指定文件
+function writeToFile(data, i, path = 'cl-results.txt') {
+  var result = `${i}:${data.content}\n${HOME_PRE}${data.preview_url}\n\n`;
+  return new Promise((resolve, reject) => {
+    fs.appendFile(path, result, {
+      encoding: 'UTF8'
+    }, err => {
+      if(err) {
+        reject(err);
+      }
+      resolve('write success');
+    });
+  });
+}
+
+// 保存获取数据
+async function saveData(datas, path = 'cl-results.txt') {
+  for (let i = 0; i < datas.length; i++) {
+    await writeToFile(datas[i], i, path);
+  }
+  console.log(`数据成功写入${path}`);
+}
+
+getData();

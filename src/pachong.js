@@ -2,7 +2,9 @@ var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
 
-var originUrl = 'https://www.douyu.com/directory/game/CSGO';
+const game = 'CSGO';
+
+var originUrl = 'https://www.douyu.com/directory/game/' + game;
 var originUrl1 = 'http://www.qiushibaike.com/text';
 var originUrl2 = 'http://www.qiushibaike.com';
 var options = {
@@ -19,7 +21,7 @@ request(options, function(err, res, body) {
   var lists = $('#live-list-contentbox .play-list-link');
   var results = [];
 
-  var writer = fs.createWriteStream('./dota2 data.txt');
+  var writer = fs.createWriteStream(`./${game} results.txt`);
   lists.each(function(index, elem) {
     var $this = $(this);
     writer.write('标题：【' + $this.find('.mes h3').text() + '】\n', 'UTF8');
