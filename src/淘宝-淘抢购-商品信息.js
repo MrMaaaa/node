@@ -1,7 +1,6 @@
 var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
-var iconv = require('iconv-lite');
 
 const HOME_PRE = 'https://qiang.taobao.com/?spm=a21bo.50862.201859.4.AJTHsT';
 
@@ -28,7 +27,7 @@ request(options, function(err, res, body) {
       originalPrice: $(this).find('.qg-detail .link .original-price i').text(),
       promoPrice: $(this).find('.qg-detail .link .promo-price em').text(),
       progress: $(this).find('.qg-detail .process .process-text .percent').text(),
-      url: 'https:' + $(this).attr('href')
+      url: $(this).attr('href').replace(/^\/\//, 'https://'),
     });
   });
 
@@ -45,5 +44,4 @@ request(options, function(err, res, body) {
       }
     });
   })(0);
-
 });

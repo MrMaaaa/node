@@ -36,7 +36,7 @@
 var mutil = require('../modules/MUtils.js');
 
 mutil.sendEmail({
-  receiver: '1254756515@qq.com',
+  receiver: '986886331@qq.com',
   title: '发送测试',
   text: '测试正文'
 });

@@ -104,9 +104,10 @@ function renameCSS(jspath, filternames = [], randStr) {
   });
 }
 
-readHTMLInDirectory('../../../detail-page').then(res => {
-  editHtmls(res);
+readHTMLInDirectory('../').then(res => {
+  // editHtmls(res);
+  console.log(res);
 });
 
-renameJS('../../../detail-page/js', ['pricing'], randStr);
-renameCSS('../../../detail-page/css', ['common'], randStr);
+// renameJS('../../../detail-page/js', ['pricing'], randStr);
+// renameCSS('../../../detail-page/css', ['common'], randStr);
