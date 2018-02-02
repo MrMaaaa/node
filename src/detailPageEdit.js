@@ -104,9 +104,8 @@ function renameCSS(jspath, filternames = [], randStr) {
   });
 }
 
-readHTMLInDirectory('../').then(res => {
-  // editHtmls(res);
-  console.log(res);
+readHTMLInDirectory('../asset').then(res => {
+  editHtmls(res);
 });
 
 // renameJS('../../../detail-page/js', ['pricing'], randStr);

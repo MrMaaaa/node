@@ -19,6 +19,9 @@ function traverse(dir, callback, finish, isDeepTraverse=true) {
   var path = path || require('path');
 
   fs.readdir(dir, (err, files) => {
+    if (err) {
+      throw err;
+    }
     (function next(i) {
       if (i < files.length) {
         var pathname = path.join(dir, files[i]);
