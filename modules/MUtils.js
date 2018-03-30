@@ -14,17 +14,20 @@ function traverseSync(dir, callback) {
 };
 
 //异步遍历指定路径目录
-function traverse(dir, callback, finish) {
+function traverse(dir, callback, finish, isDeepTraverse=true) {
   var fs = fs || require('fs');
   var path = path || require('path');
 
   fs.readdir(dir, (err, files) => {
+    if (err) {
+      throw err;
+    }
     (function next(i) {
       if (i < files.length) {
         var pathname = path.join(dir, files[i]);
 
         fs.stat(pathname, function(err, stats) {
-          if (stats.isDirectory()) {
+          if (stats.isDirectory() && isDeepTraverse) {
             traverse(pathname, callback, function() {
               next(i + 1);
             });
