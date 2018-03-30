@@ -11,7 +11,7 @@ exports.traverseSync = (dir, callback) => {
       callback && callback(pathname);
     }
   });
-}
+};
 
 //异步遍历指定路径目录
 exports.traverse = (dir, callback, finish) => {
@@ -38,7 +38,7 @@ exports.traverse = (dir, callback, finish) => {
       }
     })(0);
   });
-}
+};
 
 exports.sendEmail = (options) => {
   const request = require('request');
@@ -63,4 +63,10 @@ exports.sendEmail = (options) => {
     }
     smtpTransport.close();
   });
-}
+};
+
+exports.typeof = (variable) => {
+  return Object.prototype.toString
+    .call(variable)
+    .match(/(?<=\[object\s).+(?=\])/gi)[0];
+};

@@ -1,11 +1,11 @@
-var request = require('request');
-var cheerio = require('cheerio');
-var fs = require('fs');
-var iconv = require('iconv-lite');
+const request = require('request');
+const cheerio = require('cheerio');
+const fs = require('fs');
+const iconv = require('iconv-lite');
 
 const HOME_PRE = 'https://a.jd.com';
 
-var options = {
+const options = {
   url: HOME_PRE,
   headers: {
     'User-Agent':
@@ -16,13 +16,13 @@ var options = {
 
 //京东需先解决登录问题
 request(options, function(err, res, body) {
-  var $ = cheerio.load(body, {
+  const $ = cheerio.load(body, {
     ignoreWhitespace: true,
     xmlMode: true
   });
 
-  var lists = [];
-  var results = $('body');
+  const lists = [];
+  const results = $('body');
   results.each(function(index, elem) {
     lists.push({
       price: $(this)
