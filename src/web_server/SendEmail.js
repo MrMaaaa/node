@@ -1,4 +1,4 @@
-const sendEmail = require('../modules/utils.js');
+const sendEmail = require('../../modules/utils.js');
 
 sendEmail.sendEmail({
   from: '马腾飞 <tenfyma@foxmail.com>',
