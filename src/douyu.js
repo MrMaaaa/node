@@ -5,8 +5,6 @@ var fs = require('fs');
 const game = 'CSGO';
 
 var originUrl = 'https://www.douyu.com/directory/game/' + game;
-var originUrl1 = 'http://www.qiushibaike.com/text';
-var originUrl2 = 'http://www.qiushibaike.com';
 var options = {
   url: originUrl,
   headers: {
