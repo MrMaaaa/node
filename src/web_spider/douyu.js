@@ -17,20 +17,14 @@ request(options, function(err, res, body) {
     xmlMode: true
   });
   const lists = $('#live-list-contentbox .play-list-link');
-  let results = [];
 
   const writer = fs.createWriteStream(`./${itemName} results.txt`);
   lists.each(function(index, elem) {
     let $this = $(this);
-    writer.write('标题：【' + $this.find('.mes h3').text() + '】\n', 'UTF8');
-    writer.write('主播：【' + $this.find('.dy-name').text() + '】  人数：【' + $this.find('.dy-num').text() + '】\n', 'UTF8');
+    writer.write(`标题：${$this.find('.mes h3').text()}\n`, 'UTF8');
+    writer.write(`主播：${$this.find('.dy-name').text()}\n`, 'UTF8');
+    writer.write(`人气：${$this.find('.dy-num').text()}\n`, 'UTF8');
     writer.write('\n', 'UTF8');
-    results.push({
-      html: $this.html(),
-      title: $this.find('.mes h3').text(),
-      name: $this.find('.dy-name').text(),
-      num: $this.find('.dy-num').text()
-    });
   });
 
   writer.end();

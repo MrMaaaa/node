@@ -1,7 +1,7 @@
-let request = require('request');
-let cheerio = require('cheerio');
-let fs = require('fs');
-let iconv = require('iconv-lite');
+const request = require('request');
+const cheerio = require('cheerio');
+const fs = require('fs');
+const iconv = require('iconv-lite');
 
 // 主站
 const HOME_PRE = 'http://cc.ddder.us/';
