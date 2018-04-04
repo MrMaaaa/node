@@ -1,9 +1,9 @@
 //同步遍历指定路径目录
-exports.traverseSync = (dir, callback) => {
-  const fs = require('fs');
-  const path = require('path');
+function traverseSync(dir, callback) {
+  const fs = fs || require('fs');
+  const path = path || require('path');
   fs.readdirSync(dir).forEach((file) => {
-    let pathname = path.join(dir, file);
+    const pathname = path.join(dir, file);
 
     if (fs.statSync(pathname).isDirectory()) {
       traverse(pathname, callback);
@@ -11,25 +11,29 @@ exports.traverseSync = (dir, callback) => {
       callback && callback(pathname);
     }
   });
-};
+}
 
 //异步遍历指定路径目录
-exports.traverse = (dir, callback, finish) => {
-  const fs = require('fs');
-  const path = require('path');
+function traverse(dir, callback, finish, isDeepTraverse = true) {
+  const fs = fs || require('fs');
+  const path = path || require('path');
 
   fs.readdir(dir, (err, files) => {
+    if (err) {
+      throw err;
+    }
     (function next(i) {
       if (i < files.length) {
-        let pathname = path.join(dir, files[i]);
+        const pathname = path.join(dir, files[i]);
 
-        fs.stat(pathname, (err, stats) => {
-          if (stats.isDirectory()) {
+        fs.stat(pathname, function(err, stats) {
+          if (stats.isDirectory() && isDeepTraverse) {
             traverse(pathname, callback, function() {
               next(i + 1);
             });
           } else {
             callback && callback(pathname);
+
             next(i + 1);
           }
         });
@@ -38,11 +42,11 @@ exports.traverse = (dir, callback, finish) => {
       }
     })(0);
   });
-};
+}
 
-exports.sendEmail = (options) => {
-  const request = require('request');
-  const mail = require('nodemailer');
+function sendEmail(options) {
+  const request = request || require('request');
+  const mail = mail || require('nodemailer');
 
   const smtpTransport = mail.createTransport({
     host: 'smtp.qq.com',
@@ -55,18 +59,40 @@ exports.sendEmail = (options) => {
   });
 
   //设置邮箱内容
-  smtpTransport.sendMail(options, (error, response) => {
+  const mailOptions = {
+    from: '马腾飞 <tenfyma@foxmail.com>',
+    to: options.receiver, //收件人，多个收件人用逗号隔开
+    subject: options.title, //标题
+    text: options.text, //文本格式内容
+    html: options.html //html格式内容
+    /*attachments: [{ //上传附件
+      filename: 'json',
+      path: './add.html'
+    }]*/
+  };
+
+  smtpTransport.sendMail(mailOptions, function(error, response) {
+    let status = '';
     if (error) {
-      console.log(`error (${error})`);
+      console.log(error);
+      status = error;
     } else {
-      console.log(`success (${response.response})`);
+      console.log('success' + response.response);
+      status = '200';
     }
     smtpTransport.close();
+    return status;
   });
-};
+}
 
-exports.typeof = (variable) => {
+function typeOf(variable) {
   return Object.prototype.toString
     .call(variable)
     .match(/(?<=\[object\s).+(?=\])/gi)[0];
-};
+}
+
+exports.traverse = traverse;
+exports.traverseSync = traverseSync;
+exports.sendEmail = sendEmail;
+
+exports.typeOf = typeOf;
