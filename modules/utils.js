@@ -1,7 +1,7 @@
 //同步遍历指定路径目录
 function traverseSync(dir, callback) {
-  const fs = fs || require('fs');
-  const path = path || require('path');
+  const fs = require('fs');
+  const path = require('path');
   fs.readdirSync(dir).forEach((file) => {
     const pathname = path.join(dir, file);
 
@@ -15,8 +15,8 @@ function traverseSync(dir, callback) {
 
 //异步遍历指定路径目录
 function traverse(dir, callback, finish, isDeepTraverse = true) {
-  const fs = fs || require('fs');
-  const path = path || require('path');
+  const fs = require('fs');
+  const path = require('path');
 
   fs.readdir(dir, (err, files) => {
     if (err) {
@@ -45,8 +45,8 @@ function traverse(dir, callback, finish, isDeepTraverse = true) {
 }
 
 function sendEmail(options) {
-  const request = request || require('request');
-  const mail = mail || require('nodemailer');
+  const request = require('request');
+  const mail = require('nodemailer');
 
   const smtpTransport = mail.createTransport({
     host: 'smtp.qq.com',
