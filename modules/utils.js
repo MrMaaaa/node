@@ -88,7 +88,8 @@ function sendEmail(options) {
 function typeOf(variable) {
   return Object.prototype.toString
     .call(variable)
-    .match(/(?<=\[object\s).+(?=\])/gi)[0];
+    .match(/(?<=\[object\s).+(?=\])/gi)[0]
+    .toLowerCase();
 }
 
 exports.traverse = traverse;
