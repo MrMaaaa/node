@@ -1,0 +1,43 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.game-container {
+  position: relative;
+  width: 600px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.game-container .canvas {
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: #666;
+}
+
+.game-container .status {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  width: 200px;
+  height: 100%;
+  padding: 15px;
+  background: #000;
+  color: #fff;
+}
+
+.game-container .score {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 200px;
+  height: 100%;
+  padding: 15px;
+  background: #000;
+  color: #fff;
+}
