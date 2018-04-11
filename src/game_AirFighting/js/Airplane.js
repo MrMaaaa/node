@@ -1,14 +1,14 @@
 class Airplane {
-  constructor(
+  constructor({
     texturePath = '',
-    width = 20,
-    height = 30,
+    width = 40,
+    height = 60,
     x = 200,
     y = 0,
     speedX = 2,
     speedY = 2
-  ) {
-    this.name = 'player';
+  }) {
+    this.name = 'Airplane';
     this.texturePath = texturePath;
     this.texture = null;
     this.width = width;
@@ -38,28 +38,6 @@ class Airplane {
       img.onload = () => {
         this.texture = img;
         this.setState('alive', true);
-
-        const playerKeyDown = (e) => {
-          const keyCode = e.keyCode;
-          const state = keyCodeToState(keyCode);
-          this.setState(state, true);
-        };
-
-        const playerKeyPress = (e) => {
-          const keyCode = e.keyCode;
-          let state = keyCodeToState(keyCode);
-          this.setState(state, true);
-        };
-
-        const playerKeyUp = (e) => {
-          const keyCode = e.keyCode;
-          let state = keyCodeToState(keyCode);
-          this.setState(state, false);
-        };
-
-        window.addEventListener('keydown', playerKeyDown, false);
-        window.addEventListener('keypress', playerKeyPress, false);
-        window.addEventListener('keyup', playerKeyUp, false);
         resolve();
       };
       img.onerror = () => {
@@ -91,7 +69,15 @@ class Airplane {
   }
 
   draw(ctx) {
+    ctx.save();
+    // TODO 左右移动时对飞机进行y轴的旋转
+    // if (this.state.left) {
+    //   ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // } else if (this.state.right) {
+    //   ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // }
     ctx.drawImage(this.texture, this.x, this.y, this.width, this.height);
+    ctx.restore();
   }
 
   fire() {}

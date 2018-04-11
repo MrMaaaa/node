@@ -63,12 +63,18 @@ class Game {
 
   draw() {
     this.ctx.clearRect(0, 0, this.width, this.height);
+
+    this.elements.sort((before, after) => before.drawLevel > after.drawLevel);
+
     this.elements.map((elem, index) => {
-      if ((elem.name === 'planet')) {
-        if (elem.y >= this.height) {
-          elem.y = parseInt(Math.random() * -400 - 20);
+      // 如果背景的星球飞出地图，则重新对其进行定位
+      if (elem.name === 'planet') {
+        if (elem.y >= this.height + elem.radius) {
+          elem.y = parseInt(Math.random() * -this.height - 20);
         }
       }
+
+      // 将alive为true的元素进行绘制，为false的元素从队列中删除
       if (elem.state.alive) {
         elem.run();
         if (elem.state.move) {

@@ -1,21 +1,25 @@
-class Planet {
+class Bullet {
   constructor({
     x = 0,
     y = 0,
-    radius = 10,
+    radius = 4,
     speed = 5,
-    fillColor = '#ddd',
-    strokeColor = '#ddd'
+    fillColor = '#fff',
+    strokeColor = '#000',
+    from = ''
   }) {
-    this.name = 'planet';
-    this.radius = radius;
+    if (!from) throw 'param \'from\' must be set as a object\'s name';
+
+    this.name = 'Bullet';
     this.x = x;
     this.y = y;
+    this.radius = radius;
     this.speed = speed;
     this.fillColor = fillColor;
     this.strokeColor = strokeColor;
+    this.from = from;
     this.state = {
-      drawLevel: 0,
+      drawLevel: 10,
       alive: true
     };
   }
@@ -25,7 +29,7 @@ class Planet {
   }
 
   run() {
-    this.y += this.speed;
+    this.y -= this.speed;
   }
 
   draw(ctx) {
