@@ -5,8 +5,8 @@ class Player extends Airplane {
     height = 60,
     x = 200,
     y = 0,
-    speedX = 2,
-    speedY = 2
+    speedX = 4,
+    speedY = 4
   }) {
     super({
       texturePath,

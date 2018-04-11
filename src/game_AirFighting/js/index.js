@@ -31,7 +31,8 @@ window.onload = async function() {
 
   const player = new Player({
     texturePath:
-      '/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/Aegir.png'
+      // '/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/Aegir.png'
+      'file:///C:/Users/hasee/Documents/My-Project/git-node/src/game_AirFighting/assets/airplanes/Aegir.png'
   });
 
   player.x = (game.width - player.width) / 2;
