@@ -1,15 +1,5 @@
 function boundaryDetected(boundary, element, type = 'rectangle') {
   if (type === 'rectangle') {
-    // if (
-    //   element.x < 0 ||
-    //   element.y < 0 ||
-    //   element.x + element.width > boundary.width ||
-    //   element.y + element.height > boundary.height
-    // ) {
-    //   return false;
-    // } else {
-    //   return true;
-    // }
     if (element.x <= 0) element.x = 0;
     if (element.y <= 0) element.y = 0;
     if (element.x + element.width >= boundary.width) {
@@ -18,6 +8,19 @@ function boundaryDetected(boundary, element, type = 'rectangle') {
     if (element.y + element.height >= boundary.height) {
       element.y = boundary.height - element.height;
     }
+  }
+}
+
+// 矩形和矩形碰撞检测
+/**
+ * 
+ * @param {Class} rect1 矩形1
+ * @param {Class} rect2 矩形2
+ * @return {Boolean} 是否
+ */
+function rectangle2RectangleDetected(rect1, rect2) {
+  if (rect1.x) {
+
   }
 }
 

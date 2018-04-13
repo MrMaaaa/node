@@ -27,7 +27,7 @@ class Airplane {
       right: false,
       shoot: false,
       move: false, // 用来判断是否允许移动
-      invincible: false
+      invincible: false // 无敌
     };
   }
 
@@ -46,23 +46,7 @@ class Airplane {
     });
   }
 
-  run() {
-    if (this.state.move && this.state.up) {
-      this.y -= this.speedY;
-    }
-
-    if (this.state.move && this.state.right) {
-      this.x += this.speedX;
-    }
-
-    if (this.state.move && this.state.down) {
-      this.y += this.speedY;
-    }
-
-    if (this.state.move && this.state.left) {
-      this.x -= this.speedX;
-    }
-  }
+  update() {}
 
   setState(state, status = false) {
     this.state[state] = status;

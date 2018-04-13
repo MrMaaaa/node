@@ -24,7 +24,7 @@ class Planet {
     this.state[state] = status;
   }
 
-  run() {
+  update() {
     this.y += this.speed;
   }
 

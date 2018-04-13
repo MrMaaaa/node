@@ -1,12 +1,12 @@
-class Player extends Airplane {
+class Enemy extends Airplane {
   constructor({
     texturePath = '',
     width = 40,
     height = 60,
     x = 200,
     y = 0,
-    speedX = 4,
-    speedY = 4
+    speedX = 1,
+    speedY = 2
   }) {
     super({
       texturePath,
@@ -18,7 +18,9 @@ class Player extends Airplane {
       speedY
     });
 
-    this.name = 'Player';
+    this.name = 'Enemy';
+    this.state.move = true;
+    this.state.down = true;
   }
 
   update() {

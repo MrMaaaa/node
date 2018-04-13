@@ -29,10 +29,21 @@ window.onload = async function() {
     );
   }
 
+  // 生成敌人
+  for (let i = 0; i < 1; i++) {
+    const enemy = new Enemy({
+      texturePath:
+        "/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/H'Soc.png"
+      // 'file:///C:/Users/hasee/Documents/My-Project/git-node/src/game_AirFighting/assets/airplanes/H'Soc.png'
+    });
+    await enemy.init();
+    game.addElements(enemy);
+  }
+
   const player = new Player({
     texturePath:
-      // '/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/Aegir.png'
-      'file:///C:/Users/hasee/Documents/My-Project/git-node/src/game_AirFighting/assets/airplanes/Aegir.png'
+      '/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/Aegir.png'
+    // 'file:///C:/Users/hasee/Documents/My-Project/git-node/src/game_AirFighting/assets/airplanes/Aegir.png'
   });
 
   player.x = (game.width - player.width) / 2;
@@ -57,6 +68,7 @@ window.onload = async function() {
     player.setState(state, false);
 
     if (state === 'shoot') {
+      game.toggle();
       const bullet = new Bullet({
         x: player.x + player.width / 2,
         y: player.y - 5,
@@ -87,18 +99,45 @@ window.onload = async function() {
 
   function run() {
     animate(() => {
-      if (
-        game.state === 'START' &&
-        player.y >= game.height - player.height * 2
-      ) {
-        player.y -= player.speedY;
-        game.draw();
-      } else {
-        player.setState('move', true);
-        game.continue();
-      }
-      if (game.state === 'CONTINUE') {
-        game.draw();
+      if (game.state === 'START') {
+        if (player.y >= game.height - player.height * 2) {
+          player.y -= player.speedY;
+          game.draw((elem) => {
+            // 如果背景的星球飞出地图，则重新对其进行定位
+            if (elem.name === 'planet') {
+              if (elem.y >= game.height + elem.radius) {
+                elem.y = parseInt(Math.random() * -game.height - 20);
+              }
+            }
+
+            return elem;
+          });
+        } else {
+          player.setState('move', true);
+          game.continue();
+        }
+      } else if (game.state === 'CONTINUE') {
+        game.draw((elem) => {
+          // 如果背景的星球飞出地图，则重新对其进行定位
+          if (elem.name === 'planet') {
+            if (elem.y >= game.height + elem.radius) {
+              elem.y = parseInt(Math.random() * -game.height - 20);
+            }
+          }
+
+          // 如果敌人飞船在玩家上方进行跟随处理
+          if (elem.name === 'Enemy') {
+            if (elem.y < player.y) {
+              if (elem.x < player.x) {
+                elem.x += 2;
+              } else {
+                elem.x -= 2;
+              }
+            }
+          }
+
+          return elem;
+        });
       }
 
       run();

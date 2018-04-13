@@ -47,6 +47,14 @@ class Game {
     this.setState('STOP');
   }
 
+  toggle() {
+    if (this.state === 'CONTINUE') {
+      this.setState('PAUSE');
+    } else if (this.state === 'PAUSE') {
+      this.setState('CONTINUE');
+    }
+  }
+
   setFPS(fps = 60) {
     if (!isNaN(fps)) {
       this.fps = parseInt(fps);
@@ -61,22 +69,20 @@ class Game {
     this.start();
   }
 
-  draw() {
+  draw(handleFunc) {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     this.elements.sort((before, after) => before.drawLevel > after.drawLevel);
 
     this.elements.map((elem, index) => {
-      // 如果背景的星球飞出地图，则重新对其进行定位
-      if (elem.name === 'planet') {
-        if (elem.y >= this.height + elem.radius) {
-          elem.y = parseInt(Math.random() * -this.height - 20);
-        }
+      if (handleFunc) {
+        // 执行每个元素的处理
+        elem = handleFunc(elem);
       }
 
       // 将alive为true的元素进行绘制，为false的元素从队列中删除
       if (elem.state.alive) {
-        elem.run();
+        elem.update();
         if (elem.state.move) {
           boundaryDetected(this, elem);
         }
@@ -85,6 +91,7 @@ class Game {
       } else {
         this.elements.splice(index, 1);
       }
+      return elem;
     });
   }
 }

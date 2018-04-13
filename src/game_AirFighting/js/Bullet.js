@@ -28,7 +28,7 @@ class Bullet {
     this.state[state] = status;
   }
 
-  run() {
+  update() {
     this.y -= this.speed;
   }
 
