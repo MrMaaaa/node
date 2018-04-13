@@ -9,14 +9,14 @@ class Player extends Airplane {
     speedY = 2
   }) {
     super({
-      texturePath,
-      width,
-      height,
-      x,
-      y,
-      speedX,
-      speedY
-    });
+    texturePath,
+    width,
+    height,
+    x,
+    y,
+    speedX,
+    speedY
+  });
 
     this.name = 'Player';
   }
