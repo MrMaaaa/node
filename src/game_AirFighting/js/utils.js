@@ -11,16 +11,24 @@ function boundaryDetected(boundary, element, type = 'rectangle') {
   }
 }
 
-// 矩形和矩形碰撞检测
 /**
- * 
- * @param {Class} rect1 矩形1
- * @param {Class} rect2 矩形2
- * @return {Boolean} 是否
+ * 矩形和矩形碰撞检测（两个矩形的重心在X/Y轴上的距离都小于两个矩形长/宽的一半之和）
+ * @param {Object} r1 矩形1
+ * @param {Object} r2 矩形2
+ * @return {Boolean}
  */
-function rectangle2RectangleDetected(rect1, rect2) {
-  if (rect1.x) {
+function isRectangleCollision(r1, r2) {
+  // x与y轴重心距离
+  const centerX = Math.abs(r1.x + r1.width / 2 - (r2.x + r2.width / 2));
+  const centerY = Math.abs(r1.y + r1.height / 2 - (r2.y + r2.height / 2));
+  // 长与宽的一半之和
+  const sumW = Math.abs((r1.width + r2.width) / 2);
+  const sumH = Math.abs((r1.height + r2.height) / 2);
 
+  if (centerX < sumW && centerY < sumH) {
+    return true;
+  } else {
+    return false;
   }
 }
 

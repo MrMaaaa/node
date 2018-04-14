@@ -127,6 +127,10 @@ window.onload = async function() {
 
           // 如果敌人飞船在玩家上方进行跟随处理
           if (elem.name === 'Enemy') {
+            if (isRectangleCollision(elem, player)) {
+              // 发生碰撞
+              // game.stop();
+            }
             if (elem.y < player.y) {
               if (elem.x < player.x) {
                 elem.x += 2;
