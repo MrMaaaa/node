@@ -17,7 +17,7 @@ function boundaryDetected(boundary, element, type = 'rectangle') {
  * @param {Object} r2 矩形2
  * @return {Boolean}
  */
-function isRectangleCollision(r1, r2) {
+function isAirplaneCollision(r1, r2) {
   // x与y轴重心距离
   const centerX = Math.abs(r1.x + r1.width / 2 - (r2.x + r2.width / 2));
   const centerY = Math.abs(r1.y + r1.height / 2 - (r2.y + r2.height / 2));
