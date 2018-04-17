@@ -18,7 +18,9 @@ class Enemy extends Airplane {
       speedY
     });
 
+    
     this.name = 'Enemy';
+    this.y = -this.height;
     this.state.move = true;
     this.state.down = true;
   }

@@ -77,13 +77,13 @@ class Game {
     this.elements.map((elem, index) => {
       if (handleFunc) {
         // 执行每个元素的处理
-        elem = handleFunc(elem);
+        elem = handleFunc(elem, index);
       }
 
       // 将alive为true的元素进行绘制，为false的元素从队列中删除
       if (elem.state.alive) {
         elem.update();
-        if (elem.state.move) {
+        if (elem.name === 'Player' && elem.state.move) {
           boundaryDetected(this, elem);
         }
 

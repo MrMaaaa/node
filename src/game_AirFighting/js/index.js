@@ -68,7 +68,6 @@ window.onload = async function() {
     player.setState(state, false);
 
     if (state === 'shoot') {
-      game.toggle();
       const bullet = new Bullet({
         x: player.x + player.width / 2,
         y: player.y - 5,
@@ -117,7 +116,7 @@ window.onload = async function() {
           game.continue();
         }
       } else if (game.state === 'CONTINUE') {
-        game.draw((elem) => {
+        game.draw((elem, index) => {
           // 如果背景的星球飞出地图，则重新对其进行定位
           if (elem.name === 'planet') {
             if (elem.y >= game.height + elem.radius) {
@@ -127,10 +126,18 @@ window.onload = async function() {
 
           // 如果敌人飞船在玩家上方进行跟随处理
           if (elem.name === 'Enemy') {
-            // 检测是否碰撞
+            // 检测是否与玩家碰撞
             if (isAirplaneCollision(elem, player)) {
               // game.stop();
             }
+
+            // 检测是否与玩家子弹碰撞
+            game.elements.map((item) => {
+              if (item.name === 'Bullet' && isBulletCollision(elem, item)) {
+                log('碰撞');
+              }
+            });
+
             // 敌人移动
             if (elem.y < player.y) {
               if (elem.x < player.x) {
@@ -138,6 +145,11 @@ window.onload = async function() {
               } else {
                 elem.x -= 2;
               }
+            }
+
+            // 如果该飞船已经超出地图，将其位置恢复到顶部
+            if (elem.y > game.height) {
+              elem.y = -elem.height;
             }
           }
 
