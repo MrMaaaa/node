@@ -1,13 +1,20 @@
 class Vector2 {
   constructor(p1, p2 = { x: 0, y: 0 }) {
-    this.p1 = p1;
-    this.p2 = p2;
+    if (
+      Utils.typeOf(p1.x) === 'undefined' ||
+      Utils.typeOf(p1.y) === 'undefined' ||
+      Utils.typeOf(p2.x) === 'undefined' ||
+      Utils.typeOf(p2.y) === 'undefined'
+    ) {
+      throw '参数格式错误';
+    }
+
     this.x = p1.x - p2.x;
     this.y = p1.y - p2.y;
   }
 
   length() {
-    return Math.sqrt(this.x ** 2 + this.y ** 2);
+    return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
   sub(v) {
@@ -87,16 +94,33 @@ function isAirplaneCollision(r1, r2) {
 }
 
 /**
- * @TODO 矩形和圆碰撞检测（使用向量判断圆距离矩形最小值与圆半径进行比较 详见：https://www.zhihu.com/question/24251545）
+ * 矩形和圆碰撞检测（使用向量判断圆距离矩形最小值与圆半径进行比较 详见：https://www.zhihu.com/question/24251545）
  * @param {Object} r 矩形
  * @param {Object} c 圆
  * @return {Boolean} 是否碰撞
  */
 function isBulletCollision(r, c) {
-  const vr = new Vector2(r);
-  const vc = new Vector2(c);
-  const vu = vr.sub(vc);
-  return vu.length() > 0;
+  // 首先将坐标系移动到矩形中心，同时将圆移动到第一象限（canvas中对应为第四象限）
+  // 原点到矩形第一象限中的顶点坐标的向量
+  const vr = new Vector2({
+    x: r.width / 2,
+    y: r.height / 2
+  });
+
+  // 将此时的圆心位置移动到第一象限
+  const nr = {
+    x: Math.abs(c.x - (r.x + r.width / 2)),
+    y: Math.abs(c.y - (r.y + r.height / 2))
+  };
+
+  // 原点到圆的顶点坐标的向量
+  const vc = new Vector2(nr);
+
+  // vc - vr即可得到圆距离矩形最短距离，与圆半径进行比较判断是否相交
+  const vu = vc.sub(vr);
+  if (vu.x < 0) vu.x = 0;
+  if (vu.y < 0) vu.y = 0;
+  return vu.length() < c.radius;
 }
 
 function keyCodeToState(keyCode) {

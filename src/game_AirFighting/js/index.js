@@ -124,6 +124,12 @@ window.onload = async function() {
             }
           }
 
+          if (elem.name === 'Bullet') {
+            if (elem.y + elem.height < 0) {
+              game.elements.splice(index, 1);
+            }
+          }
+
           // 如果敌人飞船在玩家上方进行跟随处理
           if (elem.name === 'Enemy') {
             // 检测是否与玩家碰撞
@@ -132,9 +138,10 @@ window.onload = async function() {
             }
 
             // 检测是否与玩家子弹碰撞
-            game.elements.map((item) => {
+            game.elements.map((item, i) => {
               if (item.name === 'Bullet' && isBulletCollision(elem, item)) {
-                log('碰撞');
+                game.elements.splice(i, 1);
+                elem.y = -elem.height;
               }
             });
 
