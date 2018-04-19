@@ -92,8 +92,13 @@ function typeOf(variable) {
     .toLowerCase();
 }
 
+function escapeRegExp(string){
+    return string.replace(/([.*+?^=!:${}()|[\]\/\\])/g, "\\$&"); 
+    //$&表示整个被匹配的字符串
+}
+
 exports.traverse = traverse;
 exports.traverseSync = traverseSync;
 exports.sendEmail = sendEmail;
-
 exports.typeOf = typeOf;
+exports.escapeRegExp = escapeRegExp;
