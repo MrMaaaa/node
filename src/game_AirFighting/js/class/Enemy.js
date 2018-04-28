@@ -23,6 +23,7 @@ class Enemy extends Airplane {
     this.y = -this.height;
     this.state.move = true;
     this.state.down = true;
+    this.point = 100;
   }
 
   update() {

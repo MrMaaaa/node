@@ -134,7 +134,7 @@ window.onload = async function() {
           if (elem.name === 'Enemy') {
             // 检测是否与玩家碰撞
             if (isAirplaneCollision(elem, player)) {
-              // game.stop();
+              game.gameEnd();
             }
 
             // 检测是否与玩家子弹碰撞
@@ -142,12 +142,14 @@ window.onload = async function() {
               if (item.name === 'Bullet' && isBulletCollision(elem, item)) {
                 game.elements.splice(i, 1);
                 elem.y = -elem.height;
+                player.updatePoint(elem.point);
+                document.getElementById('score').innerText = player.points;
               }
             });
 
             // 敌人移动
-            if (elem.y < player.y) {
-              if (elem.x < player.x) {
+            if (elem.y < player.y + 5) {
+              if (elem.x < player.x + 5) {
                 elem.x += 2;
               } else {
                 elem.x -= 2;
@@ -166,6 +168,10 @@ window.onload = async function() {
 
       run();
     }, 1000 / game.fps);
+  }
+
+  function updatePoint(point) {
+
   }
 
   run();

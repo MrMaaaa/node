@@ -1,10 +1,10 @@
 class Vector2 {
   constructor(p1, p2 = { x: 0, y: 0 }) {
     if (
-      Utils.typeOf(p1.x) === 'undefined' ||
-      Utils.typeOf(p1.y) === 'undefined' ||
-      Utils.typeOf(p2.x) === 'undefined' ||
-      Utils.typeOf(p2.y) === 'undefined'
+      p1.x === undefined ||
+      p1.y === undefined ||
+      p2.x === undefined ||
+      p2.y === undefined
     ) {
       throw '参数格式错误';
     }
@@ -118,6 +118,8 @@ function isBulletCollision(r, c) {
 
   // vc - vr即可得到圆距离矩形最短距离，与圆半径进行比较判断是否相交
   const vu = vc.sub(vr);
+
+  // 如果vu的某一方向为负，将其修正为0
   if (vu.x < 0) vu.x = 0;
   if (vu.y < 0) vu.y = 0;
   return vu.length() < c.radius;

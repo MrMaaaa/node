@@ -19,6 +19,7 @@ class Player extends Airplane {
     });
 
     this.name = 'Player';
+    this.points = 0;
   }
 
   update() {
@@ -37,5 +38,9 @@ class Player extends Airplane {
     if (this.state.move && this.state.left) {
       this.x -= this.speedX;
     }
+  }
+
+  updatePoint(point) {
+    this.points += parseInt(point);
   }
 }

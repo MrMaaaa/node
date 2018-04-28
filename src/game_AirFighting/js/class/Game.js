@@ -94,4 +94,9 @@ class Game {
       return elem;
     });
   }
+
+  gameEnd() {
+    this.setState('STOP');
+    this.ctx.clearRect(0, 0, this.width, this.height);
+  }
 }
