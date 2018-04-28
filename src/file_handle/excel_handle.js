@@ -1,14 +1,15 @@
-var xlsx = require('xlsx');
-var fs = require('fs');
+const xlsx = require('xlsx');
+const fs = require('fs');
+const path = require('path');
 
 function start(callback) {
-  var xls = xlsx.readFile('C:/Users/Administrator/Desktop/订单指派统计.xlsx');
-  var xls_s1 = xls.Sheets.Sheet1;
-  var head_reg = /^[a-zA-Z]{1}1$/;
-  var xls_header = [];
-  var xls_content = [];
-  var xls_length = xls_s1['!ref'].replace(/[a-zA-Z]/g, '').split(':')[1];
-  var xls_end_char = xls_s1['!ref'].replace(/[0-9]/g, '').split(':')[1];
+  const xls = xlsx.readFile(path.normalize('..', 'asset', '订单纸牌统计.xlsx'));
+  const xls_s1 = xls.Sheets.Sheet1;
+  const head_reg = /^[a-zA-Z]{1}1$/;
+  const xls_header = [];
+  const xls_content = [];
+  const xls_length = xls_s1['!ref'].replace(/[a-zA-Z]/g, '').split(':')[1];
+  const xls_end_char = xls_s1['!ref'].replace(/[0-9]/g, '').split(':')[1];
   for (k in xls_s1) {
     if (head_reg.test(k)) {
       xls_header.push(xls_s1[k].v);
@@ -77,5 +78,5 @@ try {
     document.getElementById('status').innerText = '成功';
   });
 } catch (e) {
-  alert(e);
+  throw e;
 }
