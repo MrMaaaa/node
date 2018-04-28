@@ -11,13 +11,14 @@ const dir = (...args) => {
  * @param {String} dirs 待统计目录
  * @param {Array} exts 需要进行统计的文件后缀（要加【.】），空表示全部统计
  * @param {Array} params 需要进行统计的内容
- * @return {Object} 包含了统计内容次数及路径的对象
+ * @return {Object}
  */
 function folderStatistic({ dirs, exts, params, callback }) {
   if (!dirs) throw 'folder path empty';
   if (Utils.typeOf(exts) !== 'array') throw 'exts is not a array';
   if (Utils.typeOf(params) !== 'array') throw 'params is not a array';
   if (params.length === 0) throw 'params empty';
+  // 初始化结果对象
   const results = {};
   params.map(
     (item) =>
@@ -30,6 +31,7 @@ function folderStatistic({ dirs, exts, params, callback }) {
   Utils.traverse(
     dirs,
     (pathname) => {
+      // exts为空表示不判断文件类型
       if (
         exts.length === 0 ||
         exts.findIndex((value) => value === path.extname(pathname)) > -1
@@ -63,14 +65,14 @@ function folderStatistic({ dirs, exts, params, callback }) {
 }
 
 // example
-// folderStatistic({
-//   dirs: '/workspace/newbaizu/pages',
-//   exts: ['.js'],
-//   params: [
-//     'status'
-//   ],
-//   callback(res) {
-//     console.log(`结果：`);
-//     dir(res);
-//   }
-// });
+folderStatistic({
+  dirs: '/workspace/qc/20180425_newbaizu_pack/pages',
+  exts: ['.js'],
+  params: [
+    'console.log'
+  ],
+  callback(res) {
+    console.log(`结果：`);
+    dir(res);
+  }
+});
