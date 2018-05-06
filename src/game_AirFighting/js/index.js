@@ -33,8 +33,9 @@ window.onload = async function() {
   for (let i = 0; i < 1; i++) {
     const enemy = new Enemy({
       texturePath:
-        "/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/H'Soc.png"
-      // 'file:///C:/Users/hasee/Documents/My-Project/git-node/src/game_AirFighting/assets/airplanes/H'Soc.png'
+        window.navigator.platform === 'Win32'
+          ? "file:///C:/MrMa/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/H'Soc.png"
+          : "/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/H'Soc.png"
     });
     await enemy.init();
     game.addElements(enemy);
@@ -42,8 +43,9 @@ window.onload = async function() {
 
   const player = new Player({
     texturePath:
-      '/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/Aegir.png'
-    // 'file:///C:/Users/hasee/Documents/My-Project/git-node/src/game_AirFighting/assets/airplanes/Aegir.png'
+      window.navigator.platform === 'Win32'
+        ? 'file:///C:/MrMa/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/Aegir.png'
+        : '/workspace/Treasure-For-TenfyMa/src/game_AirFighting/assets/airplanes/Aegir.png'
   });
 
   player.x = (game.width - player.width) / 2;
@@ -134,7 +136,9 @@ window.onload = async function() {
           if (elem.name === 'Enemy') {
             // 检测是否与玩家碰撞
             if (isAirplaneCollision(elem, player)) {
+              player.setState('alive', false);
               game.gameEnd();
+              return false;
             }
 
             // 检测是否与玩家子弹碰撞
@@ -170,9 +174,7 @@ window.onload = async function() {
     }, 1000 / game.fps);
   }
 
-  function updatePoint(point) {
-
-  }
+  function updatePoint(point) {}
 
   run();
 };

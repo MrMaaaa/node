@@ -80,6 +80,11 @@ class Game {
         elem = handleFunc(elem, index);
       }
 
+      // 如果返回false，表示游戏已结束
+      if (!elem) {
+        return false;
+      }
+
       // 将alive为true的元素进行绘制，为false的元素从队列中删除
       if (elem.state.alive) {
         elem.update();
