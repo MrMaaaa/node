@@ -4,7 +4,7 @@ const fs = require('fs');
 const iconv = require('iconv-lite'); // 页面转码插件
 
 // 主站
-const HOME_PRE = 'http://cc.ddder.us/';
+const HOME_PRE = '';
 
 // 爬取页数
 const PAGE_START = 1;

@@ -36,32 +36,3 @@ const PAGE = 'https://a.jd.com';
 
   await browser.close();
 })();
-
-//京东需先解决登录问题
-// request(options, function(err, res, body) {
-//   const $ = cheerio.load(body, {
-//     ignoreWhitespace: true,
-//     xmlMode: true
-//   });
-
-//   const lists = [];
-//   const results = $('body');
-//   results.each(function(index, elem) {
-//     lists.push({
-//       price: $(this)
-//         .find('.q-type .q-price strong')
-//         .text(),
-//       limit: $(this)
-//         .find('.q-type .q-price .q-limit')
-//         .text(),
-//       range: $(this)
-//         .find('.q-type .q-range')
-//         .text(),
-//       process: $(this)
-//         .find('.q-type .q-ops-box .q-progress .txt')
-//         .text()
-//     });
-//   });
-
-//   console.log(results.text());
-// });
