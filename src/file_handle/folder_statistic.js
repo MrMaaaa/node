@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const Utils = require('../modules/utils');
+const Utils = require('../../modules/utils');
 const log = console.log.bind(this);
 const dir = (...args) => {
   return console.dir.call(this, ...args, { depth: null });
