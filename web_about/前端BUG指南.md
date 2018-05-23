@@ -388,8 +388,8 @@
             []
           );
       };
-
-      anagrams('abc') -> ['abc','acb','bac','bca','cab','cba']
+      
+      // anagrams('abc') -> ['abc','acb','bac','bca','cab','cba']
     </pre>
 
 42. **获取滚动位置**
@@ -400,7 +400,7 @@
         y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop
       });
 
-      getScrollPos() -> {x: 0, y: 200}
+      // getScrollPos() -> {x: 0, y: 200}
     </pre>
 
 43. **颜色 rgb 转 16 进制**
@@ -409,5 +409,5 @@
       const rgbToHex = (r, g, b) =>
         ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0');
 
-      rgbToHex(255, 165, 1) -> 'ffa501'
+      // rgbToHex(255, 165, 1) -> 'ffa501'
     </pre>
