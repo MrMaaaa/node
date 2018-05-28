@@ -97,8 +97,10 @@ function escapeRegExp(string){
     //$&表示整个被匹配的字符串
 }
 
-exports.traverse = traverse;
-exports.traverseSync = traverseSync;
-exports.sendEmail = sendEmail;
-exports.typeOf = typeOf;
-exports.escapeRegExp = escapeRegExp;
+module.exports = {
+  traverse,
+  traverseSync,
+  sendEmail,
+  typeOf,
+  escapeRegExp,
+};
