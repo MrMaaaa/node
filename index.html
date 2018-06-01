@@ -12,73 +12,10 @@
             margin: 0;
             padding: 0;
         }
-
-        .content {
-            height: 150vh;
-            background: linear-gradient(to bottom, #F00, #FFF);
-        }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1000;
-        }
-
-        .modal .mask {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1000;
-        }
-
-        .modal .container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40vh;
-            z-index: 1000;
-            background: #0F0;
-            overflow: scroll;
-        }
-
-        .modal .container .s-content {
-            height: 100vh;
-            background: linear-gradient(to bottom, #00F, #FFF);
-        }
     </style>
 </head>
 
 <body>
-    <div class="content" id="content">
-
-    </div>
-
-    <div class="modal" id="container">
-        <div class="mask"></div>
-
-        <div class="container">
-            <div class="s-content"></div>
-        </div>
-    </div>
-
-    <script>
-        document.getElementById('content').ontouchmove = scrollDisabled;
-        document.getElementById('container').ontouchmove = scrollDisabled;
-
-        function scrollDisabled(event) {
-            event.stopPropagation();
-            if (event.target.className !== 's-content') {
-                event.preventDefault();
-                return false;
-            }
-        }
-    </script>
 </body>
 
 </html>
