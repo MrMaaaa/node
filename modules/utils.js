@@ -45,7 +45,6 @@ function traverse(dir, callback, finish, isDeepTraverse = true) {
 }
 
 function sendEmail(options) {
-  const request = require('request');
   const mail = require('nodemailer');
 
   const smtpTransport = mail.createTransport({
