@@ -1,5 +1,5 @@
 /**
- * 
+ * 格式化时间
  * @param {String, Number} date 日期参数
  * @param {String} format 格式化文本
  * @return {String} 格式化后的日期
@@ -19,7 +19,7 @@ const formatDate = (date, format = 'yyyy-mn-dd hh:mm:ss') => {
 };
 
 /**
- * 
+ * 格式化倒计时（最大到小时）
  * @param {Number} seconds 倒计时秒数
  * @param {String} format 格式化文本
  * @return {String} 格式化后的倒计时
