@@ -1,19 +1,26 @@
 const fs = require('fs');
 const path = require('path');
 const Utils = require('../../modules/utils');
-const log = console.log.bind(this);
-const dir = (...args) => {
-  return console.dir.call(this, ...args, { depth: null });
-};
+// const log = console.log.bind(this);
+// const dir = (...args) => {
+//   return console.dir.call(this, ...args, { depth: null });
+// };
 
 /**
  * 对输入的路径中的指定文件的指定参数进行数据统计
  * @param {String} dirs 待统计目录
  * @param {Array} exts 需要进行统计的文件后缀（要加【.】），空表示全部统计
  * @param {Array} params 需要进行统计的内容
+ * @param {Array} type content: 对内容进行匹配, name: 对标题进行匹配
  * @return {Object}
  */
-function folderStatistic({ dirs, exts, params, callback }) {
+function folderStatistic({
+  dirs,
+  exts,
+  params,
+  type = 'filecontent',
+  callback
+}) {
   if (!dirs) throw 'folder path empty';
   if (Utils.typeOf(exts) !== 'array') throw 'exts is not a array';
   if (Utils.typeOf(params) !== 'array') throw 'params is not a array';
@@ -36,26 +43,49 @@ function folderStatistic({ dirs, exts, params, callback }) {
         exts.length === 0 ||
         exts.findIndex((value) => value === path.extname(pathname)) > -1
       ) {
-        fs.readFile(pathname, 'utf-8', (err, data) => {
-          if (err) throw err;
+        if (type === 'filecontent') {
+          fs.readFile(pathname, 'utf-8', (err, data) => {
+            if (err) throw err;
 
+            for (let el of Object.keys(results)) {
+              let result = null;
+              if (Utils.typeOf(el) === 'regexp') {
+                result = data.match(el);
+              } else {
+                result = data.match(
+                  new RegExp(`${Utils.escapeRegExp(el)}`, `g`)
+                );
+              }
+
+              if (result) {
+                results[el].total += result.length;
+                results[el].detail.push({
+                  path: pathname,
+                  count: result.length
+                });
+              }
+            }
+          });
+        } else if (type === 'filename') {
           for (let el of Object.keys(results)) {
-            let result = null;
-            if (Utils.typeOf(el) === 'regexp') {
-              result = data.match(el);
-            } else {
-              result = data.match(new RegExp(`${Utils.escapeRegExp(el)}`, `g`));
-            }
+              let result = null;
+              if (Utils.typeOf(el) === 'regexp') {
+                result = pathname.match(el);
+              } else {
+                result = pathname.match(
+                  new RegExp(`${Utils.escapeRegExp(el)}`, `g`)
+                );
+              }
 
-            if (result) {
-              results[el].total += result.length;
-              results[el].detail.push({
-                path: pathname,
-                count: result.length
-              });
+              if (result) {
+                results[el].total += result.length;
+                results[el].detail.push({
+                  path: pathname,
+                  count: result.length
+                });
+              }
             }
-          }
-        });
+        }
       }
     },
     () => {
@@ -64,15 +94,17 @@ function folderStatistic({ dirs, exts, params, callback }) {
   );
 }
 
+exports = module.exports = folderStatistic;
+
 // example
-folderStatistic({
-  dirs: '/workspace/qc/20180425_newbaizu_pack/pages',
-  exts: ['.js'],
-  params: [
-    'console.log'
-  ],
-  callback(res) {
-    console.log(`结果：`);
-    dir(res);
-  }
-});
+// folderStatistic({
+//   dirs: '/workspace/qc/20180425_newbaizu_pack/pages',
+//   exts: ['.js'],
+//   params: [
+//     'console.log'
+//   ],
+//   callback(res) {
+//     console.log(`结果：`);
+//     dir(res);
+//   }
+// });
