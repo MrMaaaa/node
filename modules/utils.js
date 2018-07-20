@@ -1,4 +1,8 @@
-//同步遍历指定路径目录
+/**
+ * 同步遍历指定路径目录
+ * @param {String} dir 目录地址
+ * @param {Function} callback 回调
+ */
 function traverseSync(dir, callback) {
   const fs = require('fs');
   const path = require('path');
@@ -13,7 +17,13 @@ function traverseSync(dir, callback) {
   });
 }
 
-//异步遍历指定路径目录
+/**
+ * 异步遍历指定路径目录
+ * @param {Stirng} dir 目录地址
+ * @param {Function} callback 回调
+ * @param {Function} finish 遍历结束回调
+ * @param {Boolean} isDeepTraverse 是否遍历子文件夹
+ */
 function traverse(dir, callback, finish, isDeepTraverse = true) {
   const fs = require('fs');
   const path = require('path');
@@ -44,8 +54,11 @@ function traverse(dir, callback, finish, isDeepTraverse = true) {
   });
 }
 
+/**
+ * 发送邮件（需收件方开启smtp）
+ * @param {Object} options receiver-收件人 title-标题 text-文本格式内容 html-html格式内容
+ */
 function sendEmail(options) {
-  const request = require('request');
   const mail = require('nodemailer');
 
   const smtpTransport = mail.createTransport({
@@ -85,6 +98,11 @@ function sendEmail(options) {
   });
 }
 
+/**
+ * 获取变量类型
+ * @param {*} variable 变量
+ * @return {String} 变量类型
+ */
 function typeOf(variable) {
   return Object.prototype.toString
     .call(variable)
@@ -92,13 +110,20 @@ function typeOf(variable) {
     .toLowerCase();
 }
 
-function escapeRegExp(string){
-    return string.replace(/([.*+?^=!:${}()|[\]\/\\])/g, "\\$&"); 
-    //$&表示整个被匹配的字符串
+/**
+ * 将字符串进行正则转义，使之可以构造正则对象
+ * @param {String} string 待转义字符串
+ * @return {String} 转义后字符串
+ */
+function escapeRegExp(string) {
+  // $&表示整个被匹配的字符串
+  return string.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$&');
 }
 
-exports.traverse = traverse;
-exports.traverseSync = traverseSync;
-exports.sendEmail = sendEmail;
-exports.typeOf = typeOf;
-exports.escapeRegExp = escapeRegExp;
+exports = module.exports = {
+  traverse,
+  traverseSync,
+  sendEmail,
+  typeOf,
+  escapeRegExp
+};
