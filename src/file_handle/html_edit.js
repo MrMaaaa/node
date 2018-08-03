@@ -1,4 +1,4 @@
-const m = require('../modules/MUtils.js');
+const m = require('../modules/utils.js');
 const fs = require('fs');
 const path = require('path');
 
