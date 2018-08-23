@@ -253,3 +253,19 @@ input[type=text], button, select, textarea
 	const rgbToHex = (r, g, b) => ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0');
 	
 	// rgbToHex(255, 165, 1) -> 'ffa501'
+
+49. 微信小程序如果涉及到图片验证码，如果图片验证码保存在session中，但session一直为空，参考以下代码（先下载然后设置图片的src为返回的临时地址）：
+	wx.downloadFile({
+		url: captcha,
+		success: (res) => {
+			this.setData({
+				codeImage: res.tempFilePath
+			});
+		},
+		fail: (err) => {
+			wx.showToast({
+				icon: 'none',
+				title: '获取验证码失败，请重试',
+			});
+		}
+	});
