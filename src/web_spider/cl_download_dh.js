@@ -4,17 +4,18 @@ const fs = require('fs');
 const iconv = require('iconv-lite'); // 页面转码插件
 
 // 主站
-const HOME_PRE = '';
+const HOME_URL = 'http://ab.cbcb.us';
+const SEARCH_URL = 'http://ab.cbcb.us/thread0806.php?fid=5&search=&page=';
 
 // 爬取页数
-const PAGE_START = 1;
+const PAGE_START = 21;
 
 // 爬取长度
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 50;
 
 // 配置
 let options = {
-  url: HOME_PRE + 'thread0806.php?fid=5&search=&page=',
+  url: SEARCH_URL,
   headers: {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3107.5 Safari/537.36'
   },
@@ -27,7 +28,7 @@ let lists = [];
 // 解析页面，返回获取到的数据
 function parsePage(pageIndex) {
   console.log(`开始爬取第${pageIndex}页……`);
-  options.url = `${HOME_PRE}thread0806.php?fid=5&search=&page=${pageIndex}`;
+  options.url = `${SEARCH_URL}${pageIndex}`;
   return new Promise((resolve, reject) => {
     request(options, function(err, res, body) {
       if (err) {
@@ -72,7 +73,7 @@ async function getData(pageStart) {
 
 // 写入数据到指定文件
 function writeToFile(data, i, path = 'cl-dh-results.txt') {
-  let result = `${i}:${data.content}\n${HOME_PRE}${data.preview_url}\n\n`;
+  let result = `${i}:${data.content}\n${HOME_URL}/${data.preview_url}\n\n`;
   return new Promise((resolve, reject) => {
     fs.appendFile(path, result, {
       encoding: 'UTF8'
