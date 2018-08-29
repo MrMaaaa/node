@@ -1,76 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>环形进度条</title>
   <style>
-    .bg {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: #000;
+    html,
+    body {
+      margin: 0;
+      padding: 0;
     }
 
-    .center {
+    .loading {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 34px auto 0;
+      border-radius: 50%;
+      background: #0199FE;
+    }
+
+    .loading-center {
       position: absolute;
       top: 50%;
       left: 50%;
       z-index: 1000;
       transform: translate(-50%, -50%);
-      width: 80px;
-      height: 80px;
-      line-height: 80px;
-      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      border-radius: 100px;
       background: #fff;
+      color: #0199FE;
+      font-size: 30px;
       text-align: center;
     }
 
-    .left {
+    .loading-left {
       position: absolute;
       top: 0;
       left: 0;
       box-sizing: border-box;
-      width: 100px;
-      height: 100px;
-      border-top-left-radius: 50px;
-      border-bottom-left-radius: 50px;
-      background: #ddd;
+      width: 120px;
+      height: 120px;
+      border-top-left-radius: 120px;
+      border-bottom-left-radius: 120px;
+      background: #D2EDFF;
       transform: rotate(0deg);
       transition: all .3s;
       transform-origin: 50% 50%;
-      clip: rect(0, 50px, auto, 0);
+      clip: rect(0, 60px, auto, 0);
     }
 
-    .right {
+    .loading-right {
       position: absolute;
       top: 0;
       left: 0;
       box-sizing: border-box;
-      width: 100px;
-      height: 100px;
-      border-top-right-radius: 50px;
-      border-bottom-right-radius: 50px;
-      background: #ddd;
+      width: 120px;
+      height: 120px;
+      border-top-right-radius: 120px;
+      border-bottom-right-radius: 120px;
+      background: #D2EDFF;
       transform: rotate(0deg);
       transition: all .3s;
       transform-origin: 50% 50%;
-      clip: rect(0, auto, auto, 50px);
+      clip: rect(0, auto, auto, 60px);
     }
   </style>
 </head>
 
 <body>
-  <div class="bg">
-    <div class="center" id="center">0</div>
-    <div class="left" id="left"></div>
-    <div class="right" id="right"></div>
+  <div class="loading">
+    <div class="loading-center" id="center">0%</div>
+    <div class="loading-left" id="left"></div>
+    <div class="loading-right" id="right"></div>
   </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 <script>
   window.onload = function () {
     function setPercent(per) {
@@ -80,12 +89,12 @@
         right.setAttribute('style', `transform: rotate(${per * 180 / 50}deg);`);
       } else {
         if (per > 100) per = 100;
-        right.setAttribute('style', `background: #000;transition: none;transform: rotate(0deg);`);
-        left.setAttribute('style', `transform: rotate(${per * 180 / 50 - 180}deg);`);
+        right.setAttribute('style', `background: #0199FE;transition: none;transform: rotate(0deg);`);
+        left.setAttribute('style', `transform: rotate(${parseInt(per * 180 / 50 - 180)}deg);`);
       }
-      center.innerText = per;
+      center.innerText = per + '%';
     }
-    
+
     let i = 0;
     let interval = null;
     interval = setInterval(() => {
