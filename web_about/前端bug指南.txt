@@ -269,3 +269,13 @@ input[type=text], button, select, textarea
 			});
 		}
 	});
+
+50. 支付宝/微信小程序组件（Component）实现动画效果（Animation）时，如果实现效果和组件本身显隐有关，需预先将对应view的样式修改为使用了小程序自带的Animation方法实现的动画的隐藏状态的样式。
+	例：制作弹窗组件，对其显示与隐藏增加动画，动画函数如下（省略创建动画相关代码）：
+	隐藏动画：
+		this.animationMask.opacity(0).step();
+    this.animationContainer.translateY('100%').step();
+	显示动画：
+		this.animationMask.opacity(1).step();
+    this.animationContainer.translateY(0).step();
+	需要将该组件的样式的对应view修改为其隐藏动画方法对应的样式（opacity: 0;与translateY: 100%;）
