@@ -73,8 +73,8 @@ function sendEmail(options) {
 
   //设置邮箱内容
   const mailOptions = {
-    from: '马腾飞 <tenfyma@foxmail.com>',
-    to: options.receiver, //收件人，多个收件人用逗号隔开
+    from: options.from || '马腾飞 <tenfyma@foxmail.com>',
+    to: options.to, //收件人，多个收件人用逗号隔开
     subject: options.title, //标题
     text: options.text, //文本格式内容
     html: options.html //html格式内容
@@ -84,7 +84,7 @@ function sendEmail(options) {
     }]*/
   };
 
-  smtpTransport.sendMail(mailOptions, function(error, response) {
+  smtpTransport.sendMail(mailOptions, (error, response) => {
     let status = '';
     if (error) {
       console.log(error);
