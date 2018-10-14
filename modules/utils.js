@@ -120,10 +120,33 @@ function escapeRegExp(string) {
   return string.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$&');
 }
 
+/**
+ * 加法（纯函数）
+ * @param  {number} args 数字
+ * @return {Object} 如果含参数，返回该方法，否则返回计算结果
+ */
+
+function add(...args) {
+  const fn = function(...arg_fn) {
+    if (arg_fn.length === 0) {
+      return args.reduce((a, b) => a + b);
+    }
+    return add.apply(null, args.concat(arg_fn));
+  };
+  fn.valueOf = function() {
+    return args.reduce((a, b) => a + b);
+  };
+  fn.toString = function() {
+    return args.reduce((a, b) => a + b);
+  };
+  return fn;
+}
+
 exports = module.exports = {
   traverse,
   traverseSync,
   sendEmail,
   typeOf,
-  escapeRegExp
+  escapeRegExp,
+  add,
 };
