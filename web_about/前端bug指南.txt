@@ -279,3 +279,5 @@ input[type=text], button, select, textarea
 		this.animationMask.opacity(1).step();
     this.animationContainer.translateY(0).step();
 	需要将该组件的样式的对应view修改为其隐藏动画方法对应的样式（opacity: 0;与translateY: 100%;）
+
+51. 小程序组件中引用组件时应放在view中，在text可能导致无法显示的问题
