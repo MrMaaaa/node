@@ -125,7 +125,6 @@ function escapeRegExp(string) {
  * @param  {number} args 数字
  * @return {Object} 如果含参数，返回该方法，否则返回计算结果
  */
-
 function add(...args) {
   const fn = function(...arg_fn) {
     if (arg_fn.length === 0) {
@@ -142,6 +141,64 @@ function add(...args) {
   return fn;
 }
 
+/**
+ * 16进制颜色值转为RGB格式色值
+ * @param {String} color 16进制色值
+ * @return {String} RGB格式色值
+ */
+function toRGB(color) {
+  const reg = /#([0-9a-f]{3}){1,2}/gi;
+  if (reg.test(color)) {
+    color = color.replace('#', '');
+    if (color.length === 3) {
+      color = color
+        .split('')
+        .map((item) => item + item)
+        .join('');
+    }
+    return (
+      'rgb(' +
+      color
+        .split(/(.{2})/gi)
+        .filter((item) => item)
+        .map((item) => parseInt(item, 16))
+        .join(',') +
+      ')'
+    );
+  } else {
+    return 'invalid';
+  }
+}
+
+/**
+ * 浏览器下载
+ * @param {String|DOMObject} content 要下载的内容，如果为图片则是一个dom对象
+ * @param {*} filename 下载文件的标题
+ * @param {*} ext 文件扩展名
+ */
+function download(content, filename, ext) {
+  const a = document.createElement('a');
+  a.download = filename;
+  a.style.display = 'none';
+
+  if (ext === 'jpg' || ext === 'png') {
+    ext === 'jpg' && (ext = ext.replace('jpg', 'jpeg'));
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    // const width = content.naturalWidth;
+    // const height = content.naturalHeight;
+    ctx.drawImage(content, 0, 0);
+    a.href = canvas.toDataURL(`image/${ext}`);
+  } else {
+    const blob = new Blob([content]);
+    a.href = URL.createObjectURL(blob);
+  }
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 exports = module.exports = {
   traverse,
   traverseSync,
@@ -149,4 +206,6 @@ exports = module.exports = {
   typeOf,
   escapeRegExp,
   add,
+  download,
+  toRGB,
 };
