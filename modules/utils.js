@@ -141,6 +141,32 @@ function add(...args) {
   return fn;
 }
 
+//产生随机整数
+function randomBetween(min, max, type = 2) {
+  //如果数值输反了自行纠正
+  if (min === max) {
+    return min;
+  } else if (min > max) {
+    [min, max] = [max, min];
+  }
+
+  const diff = max - min;
+
+  if (type === 0) {
+    //不包含边界值
+    return Math.round(Math.random() * (diff - 2) + min + 1);
+  } else if (type === -1) {
+    //包含左边界值
+    return Math.floor(Math.random() * diff + min, 10);
+  } else if (type === 1) {
+    //包含右边界值
+    return Math.round(Math.random() * (diff - 1) + min) + 1;
+  } else {
+    //包含边界值，默认类型
+    return Math.round(Math.random() * diff + min);
+  }
+}
+
 /**
  * 16进制颜色值转为RGB格式色值
  * @param {String} color 16进制色值
@@ -206,6 +232,7 @@ exports = module.exports = {
   typeOf,
   escapeRegExp,
   add,
+  randomBetween,
   download,
-  toRGB,
+  toRGB
 };
