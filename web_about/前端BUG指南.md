@@ -163,7 +163,7 @@
           .getElementById('iframe')
           .contentWindow.document.getElementById('now_submit').style.visibility =
           'hidden';
-
+    
         }
     </pre>
 
@@ -226,38 +226,38 @@
     </pre>
 
 27. **移动端常见 meta 标签**
-
-    <pre>
-      &lt;meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /&gt;
-      &lt;!-- 删除苹果默认的工具栏和菜单栏 --&gt;
-      &lt;meta name="apple-mobile-web-app-capable" content="yes" /&gt;
-      &lt;!-- 设置苹果工具栏颜色 --&gt;
-      &lt;meta name="apple-mobile-web-app-status-bar-style" content="black" /&gt;
-      &lt;!-- 忽略页面中的数字识别为电话，忽略email识别 --&gt;
-      &lt;meta name="format-detection" content="telphone=no, email=no" /&gt;
-      &lt;!-- 启用360浏览器的极速模式(webkit) --&gt;
-      &lt;meta name="renderer" content="webkit"&gt;
-      &lt;!-- 避免IE使用兼容模式 --&gt;
-      &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
-      &lt;!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 --&gt;
-      &lt;meta name="HandheldFriendly" content="true"&gt;
-      &lt;!-- 微软的老式浏览器 --&gt;
-      &lt;meta name="MobileOptimized" content="320"&gt;
-      &lt;!-- uc强制竖屏 --&gt;
-      &lt;meta name="screen-orientation" content="portrait"&gt;
-      &lt;!-- QQ强制竖屏 --&gt;
-      &lt;meta name="x5-orientation" content="portrait"&gt;
-      &lt;!-- UC强制全屏 --&gt;
-      &lt;meta name="full-screen" content="yes"&gt;
-      &lt;!-- QQ强制全屏 --&gt;
-      &lt;meta name="x5-fullscreen" content="true"&gt;
-      &lt;!-- UC应用模式 --&gt;
-      &lt;meta name="browsermode" content="application"&gt;
-      &lt;!-- QQ应用模式 --&gt;
-      &lt;meta name="x5-page-mode" content="app"&gt;
-      &lt;!-- windows phone 点击无高光 --&gt;
-      &lt;meta name="msapplication-tap-highlight" content="no"&gt;
-    </pre>
+        <pre>
+          &lt;meta charset="utf-8"&gt;    声明文档使用的字符编码
+          &lt;meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"&gt;   优先使用 IE 最新版本和 Chrome
+          &lt;meta name="description" content="不超过150个字符"&gt;       页面描述
+          &lt;meta name="keywords" content="&gt;      页面关键词
+          &lt;meta name="author" content="name, email@gmail.com"&gt;    网页作者
+          &lt;meta name="robots" content="index,follow"&gt;      搜索引擎抓取
+          &lt;meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no"&gt; 为移动设备添加 viewport
+          &lt;meta name="apple-mobile-web-app-title" content="标题"&gt; iOS 设备 begin
+          &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;  添加到主屏后的标题（iOS 6 新增）
+          是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏
+          &lt;meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL"&gt;
+          添加智能 App 广告条 Smart App Banner（iOS 6+ Safari）
+          &lt;meta name="apple-mobile-web-app-status-bar-style" content="black"&gt;
+          &lt;meta name="format-detection" content="telphone=no, email=no"&gt;  设置苹果工具栏颜色
+          &lt;meta name="renderer" content="webkit"&gt;  启用360浏览器的极速模式(webkit)
+          &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;     避免IE使用兼容模式
+          &lt;meta http-equiv="Cache-Control" content="no-siteapp" &gt;    不让百度转码
+          &lt;meta name="HandheldFriendly" content="true"&gt;     针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓
+          &lt;meta name="MobileOptimized" content="320"&gt;   微软的老式浏览器
+          &lt;meta name="screen-orientation" content="portrait"&gt;   uc强制竖屏
+          &lt;meta name="x5-orientation" content="portrait"&gt;    QQ强制竖屏
+          &lt;meta name="full-screen" content="yes"&gt;              UC强制全屏
+          &lt;meta name="x5-fullscreen" content="true"&gt;       QQ强制全屏
+          &lt;meta name="browsermode" content="application"&gt;   UC应用模式
+          &lt;meta name="x5-page-mode" content="app"&gt;    QQ应用模式
+          &lt;meta name="msapplication-tap-highlight" content="no"&gt;    windows phone 点击无高光
+          设置页面不缓存
+          &lt;meta http-equiv="pragma" content="no-cache"&gt;
+          &lt;meta http-equiv="cache-control" content="no-cache"&gt;
+          &lt;meta http-equiv="expires" content="0"&gt;
+        </pre>
 
 28. **npm 安装出现【operation not premmited, unlink】的错误**
 
