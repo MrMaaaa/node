@@ -19,20 +19,20 @@ function folderStatistic({
   exts,
   params,
   type = 'filecontent',
-  callback
+  callback,
 }) {
   if (!dirs) throw 'folder path empty';
   if (Utils.typeOf(exts) !== 'array') throw 'exts is not a array';
   if (Utils.typeOf(params) !== 'array') throw 'params is not a array';
   if (params.length === 0) throw 'params empty';
   // 初始化结果对象
-  const results = {};
+  const results = new Map();
   params.map(
     (item) =>
-      (results[item] = {
+      (results.set(item, {
         total: 0,
         detail: []
-      })
+      }))
   );
 
   Utils.traverse(
@@ -67,7 +67,7 @@ function folderStatistic({
             }
           });
         } else if (type === 'filename') {
-          for (let el of Object.keys(results)) {
+          for (let el of results.keys()) {
               let result = null;
               if (Utils.typeOf(el) === 'regexp') {
                 result = pathname.match(el);
@@ -78,10 +78,10 @@ function folderStatistic({
               }
 
               if (result) {
-                results[el].total += result.length;
-                results[el].detail.push({
+                results.get(el).total += result.length;
+                results.get(el).detail.push({
                   path: pathname,
-                  count: result.length
+                  count: result.length,
                 });
               }
             }
@@ -95,16 +95,3 @@ function folderStatistic({
 }
 
 exports = module.exports = folderStatistic;
-
-// example
-// folderStatistic({
-//   dirs: '/workspace/qc/20180425_newbaizu_pack/pages',
-//   exts: ['.js'],
-//   params: [
-//     'console.log'
-//   ],
-//   callback(res) {
-//     console.log(`结果：`);
-//     dir(res);
-//   }
-// });
