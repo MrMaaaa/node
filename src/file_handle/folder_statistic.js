@@ -19,7 +19,7 @@ function folderStatistic({
   exts,
   params,
   type = 'filecontent',
-  callback,
+  callback
 }) {
   if (!dirs) throw 'folder path empty';
   if (Utils.typeOf(exts) !== 'array') throw 'exts is not a array';
@@ -27,22 +27,18 @@ function folderStatistic({
   if (params.length === 0) throw 'params empty';
   // 初始化结果对象
   const results = new Map();
-  params.map(
-    (item) =>
-      (results.set(item, {
-        total: 0,
-        detail: []
-      }))
+  params.map((item) =>
+    results.set(item, {
+      total: 0,
+      detail: []
+    })
   );
 
   Utils.traverse(
     dirs,
     (pathname) => {
       // exts为空表示不判断文件类型
-      if (
-        exts.length === 0 ||
-        exts.findIndex((value) => value === path.extname(pathname)) > -1
-      ) {
+      if (exts.length === 0 || exts.includes(path.extname(pathname))) {
         if (type === 'filecontent') {
           fs.readFile(pathname, 'utf-8', (err, data) => {
             if (err) throw err;
@@ -68,23 +64,23 @@ function folderStatistic({
           });
         } else if (type === 'filename') {
           for (let el of results.keys()) {
-              let result = null;
-              if (Utils.typeOf(el) === 'regexp') {
-                result = pathname.match(el);
-              } else {
-                result = pathname.match(
-                  new RegExp(`${Utils.escapeRegExp(el)}`, `g`)
-                );
-              }
-
-              if (result) {
-                results.get(el).total += result.length;
-                results.get(el).detail.push({
-                  path: pathname,
-                  count: result.length,
-                });
-              }
+            let result = null;
+            if (Utils.typeOf(el) === 'regexp') {
+              result = pathname.match(el);
+            } else {
+              result = pathname.match(
+                new RegExp(`${Utils.escapeRegExp(el)}`, `g`)
+              );
             }
+
+            if (result) {
+              results.get(el).total += result.length;
+              results.get(el).detail.push({
+                path: pathname,
+                count: result.length
+              });
+            }
+          }
         }
       }
     },
