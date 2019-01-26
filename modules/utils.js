@@ -141,8 +141,16 @@ function add(...args) {
   return fn;
 }
 
-//产生随机整数
+/**
+ * 产生随机整数
+ * @param {String|Number} min 最小值
+ * @param {String|Number} max 最大值
+ * @return {Number} 随机数
+ */
 function randomBetween(min, max, type = 2) {
+  if (!/^\d{1,}$/.test(min) || !/^\d{1,}$/.test(max)) {
+    throw new Error('无效的数字');
+  }
   //如果数值输反了自行纠正
   if (min === max) {
     return min;
@@ -192,15 +200,15 @@ function toRGB(color) {
       ')'
     );
   } else {
-    return 'invalid';
+    return '';
   }
 }
 
 /**
  * 浏览器下载
  * @param {String|DOMObject} content 要下载的内容，如果为图片则是一个dom对象
- * @param {*} filename 下载文件的标题
- * @param {*} ext 文件扩展名
+ * @param {String} filename 下载文件的标题
+ * @param {String} ext 文件扩展名
  */
 function download(content, filename, ext) {
   const a = document.createElement('a');
