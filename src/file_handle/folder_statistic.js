@@ -11,7 +11,7 @@ const Utils = require('../../modules/utils');
  * @param {String} dirs 待统计目录
  * @param {Array} exts 需要进行统计的文件后缀（要加【.】），空表示全部统计
  * @param {Array} params 需要进行统计的内容
- * @param {Array} type content: 对内容进行匹配, name: 对标题进行匹配
+ * @param {String} type filecontent: 对内容进行匹配, filename: 对标题进行匹配
  * @return {Object}
  */
 function folderStatistic({
