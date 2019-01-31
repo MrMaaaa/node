@@ -285,3 +285,36 @@ input[type=text], button, select, textarea
 	需要将该组件的样式的对应view修改为其隐藏动画方法对应的样式（opacity: 0;与translateY: 100%;）
 
 51. 小程序组件中引用组件时应放在view中，在text可能导致无法显示的问题
+
+52. 移动端修改键盘回车为搜索
+	安卓:	<input type="search">
+	iOS: 	<form action="javascript:return true">
+						<input type="search" :placeholder="请输入">
+				</form>
+	然后监听keycode=13的事件处理回调
+
+53. flex实现固定宽高图片自适应显示（类似小程序aspectFit效果：保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取。）
+	.img-wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 1.6rem;
+		height: 1.6rem;
+	}
+
+	.img {
+		display: block;
+		width: auto;
+		max-width: 100%;
+		height: auto;
+		max-height: 100%;
+	}
+
+	或者
+
+	.img {
+		oject-fit: scale-down;
+	}
+
+54. window.opener 可以返回打开当前窗口的那个窗口的引用
+	如果是同源可以访问document
