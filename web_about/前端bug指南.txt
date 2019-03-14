@@ -318,3 +318,45 @@ input[type=text], button, select, textarea
 
 54. window.opener 可以返回打开当前窗口的那个窗口的引用
 	如果是同源可以访问document
+
+55. 实现多行文本换行的两种方法
+	1. 使用非css标准的属性-webkit-line-clamp（非webkit内核未实现），此法只适用于移动端
+	.text {
+		display: -webkit-box;
+  	overflow: hidden;
+  	-webkit-line-clamp: 2;
+  	-webkit-box-orient: vertical;
+	}
+	2. 使用float，导致文本过长时after伪元素被顶到after伪元素下方，此时使用relative定位使之显示在文本右下角即可，若文本未达到两行，after伪元素会处于文本下方，但因为relative定位，其实际位置在wrapper右侧，使用overflow: hidden隐藏即可
+	此法适用于pc端，但效果不如法1实现理想，需给after伪元素增加背景色（甚至渐变）以美化显示效果
+	.wrapper {
+		height: 40px;
+		line-height: 20px;
+		overflow: hidden;
+	}
+	.wrapper::before {
+		content: '';
+		float: left;
+		width: 5px;
+		height: 40px;
+	}
+	.wrapper::after {
+		content: '…';
+		position: relative;
+		left: 100%;
+		top: -20px;
+		float: right;
+		width: 3em;
+		height: 20px;
+		line-height: 20px;
+		margin-left: -3em;
+		padding-right: 5px;
+		background: linear-gradient(to right, rgba(255, 255, 255, 0), white 20%, white);
+		text-align: center;
+	}
+	.text {
+		float: right;
+		margin-left: -5px;
+		width: 100%;
+		word-break: break-all;
+	}
