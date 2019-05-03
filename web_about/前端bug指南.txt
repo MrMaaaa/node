@@ -360,3 +360,19 @@ input[type=text], button, select, textarea
 		width: 100%;
 		word-break: break-all;
 	}
+
+56. 子元素宽度大于视窗宽度时父元素设置margin、padding右侧失效
+		父元素外层增加一层wrapper
+		css如下
+		.super-wrapper {
+			display: flex;
+			overflow-x: scroll;
+			.super {
+				display: flex;
+				flex-wrap: nowrap;
+				magin: 20px;
+				.sub {
+					width: 1000px;
+				}
+			}
+		}
