@@ -1,5 +1,5 @@
 /**
- * 对输入的字符串所有字符进行无序组合（不考虑重复字符）
+ * 对输入的字符串所有字符进行无序组合 例:'abc' => [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
  * @param {String} string 要进行组合的字符串
  * @return {Array} 所有无序组合
  */
@@ -13,11 +13,29 @@ const anagrams = (string) => {
       (acc, letter, i) =>
         acc.concat(
           anagrams(string.slice(0, i) + string.slice(i + 1)).map(
-            (val) => letter + val
-          )
+            (val) => letter + val,
+          ),
         ),
-      []
+      [],
     );
+};
+
+/**
+ * 对输入的字符串数组进行无序组合 例:['hello', 'world', '!'] => [ 'helloworld!', 'hello!world', 'worldhello!', 'world!hello', '!helloworld', '!worldhello' ]
+ * @param {String} arr 要进行组合的字符串
+ * @return {Array} 所有无序组合
+ */
+const anagramsArray = (arr) => {
+  if (arr.length <= 2)
+    return arr.length === 2 ? [arr[0] + arr[1], arr[1] + arr[0]] : arr;
+
+  return arr.reduce((acc, cur, idx) => {
+    return acc.concat(
+      anagramsArray(arr.slice(0, idx).concat(arr.slice(idx + 1))).map(
+        (el) => cur + el,
+      ),
+    );
+  }, []);
 };
 
 /**
@@ -52,7 +70,7 @@ const charFrequency = (string) => {
 /**
  * 汉诺塔
  * @param {Number} n 汉诺塔盘数
- * @param {String} from  汉诺塔1柱
+ * @param {String} from 汉诺塔1柱
  * @param {String} buffer 汉诺塔2柱
  * @param {String} to 汉诺塔3柱
  */
@@ -66,7 +84,8 @@ const hannoi = (n, from, buffer, to) => {
 
 exports = module.exports = {
   anagrams,
+  anagramsArray,
   traverseDisorderList,
   charFrequency,
-  hannoi
+  hannoi,
 };
