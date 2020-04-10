@@ -376,3 +376,5 @@ input[type=text], button, select, textarea
 				}
 			}
 		}
+
+57. 很离谱的一件事，暂时只在支付宝ios客户端出现，如果在非小程序端（如生活号）引入了小程序api调用的https://appx/web-view.min.js，需要使用window.my进行判断而非只使用my，否则会报错
