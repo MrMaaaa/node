@@ -411,3 +411,109 @@
       
       // rgbToHex(255, 165, 1) -> 'ffa501'
     </pre>
+
+44. **微信小程序验证码图片不显示**
+    如果出现此类情况可以尝试使用wx.downloadFile下载再显示
+
+45. **小程序引用组件不要放在<text>标签中**
+
+46. **web端修改输入法回车键为搜索**
+    安卓端
+    <pre>
+      &lt;input type="search" xxx&gt;
+    </pre>
+    ios端
+    <pre>
+      &lt;form action="javascript:return true"&gt;
+        &lt;input type="search" :placeholder="请输入"&gt;
+      &lt;/form&gt;
+    </pre>
+
+47. **flex实现固定宽高下图片自适应（类似小程序aspectFit效果：保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取。）**
+    <pre>
+      .img-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+      .img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
+      }
+    </pre>
+    也可以使用css3的新属性
+    <pre>
+      .img {
+        oject-fit: scale-down;
+      }
+    </pre>
+
+48. **window.opener返回通过window.open()打开的窗口的引用**
+
+49. **多行文本显示 …**
+    1. 传统方法 // 非webkit内核未实现，建议只在移动端使用
+    <pre>
+      .text {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    </pre>
+    2. 使用float导致文本过长时after伪元素被顶到after伪元素下方，此时使用relative定位使之显示在文本右下角即可，若文本未达到两行，after伪元素会处于文本下方，但因为relative定位，其实际位置在wrapper右侧，使用overflow: hidden隐藏即可
+    此法适用于pc端，但效果不如法1实现理想，需给after伪元素增加背景色（甚至渐变）以美化显示效果
+    <pre>
+      .wrapper {
+        height: 40px;
+        line-height: 20px;
+        overflow: hidden;
+      }
+      .wrapper::before {
+        content: '';
+        float: left;
+        width: 5px;
+        height: 40px;
+      }
+      .wrapper::after {
+        content: '…';
+        position: relative;
+        left: 100%;
+        top: -20px;
+        float: right;
+        width: 3em;
+        height: 20px;
+        line-height: 20px;
+        margin-left: -3em;
+        padding-right: 5px;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), white 20%, white);
+        text-align: center;
+      }
+      .text {
+        float: right;
+        margin-left: -5px;
+        width: 100%;
+        word-break: break-all;
+      }
+    </pre>
+
+50. **子元素宽度大于视窗宽度时父元素设置margin、padding右侧失效**
+    父元素外层增加一层wrapper
+    .super-wrapper {
+			display: flex;
+			overflow-x: scroll;
+			.super {
+				display: flex;
+				flex-wrap: nowrap;
+				magin: 20px;
+				.sub {
+					width: 1000px;
+				}
+			}
+		}
+
+51. **很离谱的一件事，暂时只在支付宝ios客户端出现，如果在非小程序端（如生活号）引入了小程序api调用的https://appx/web-view.min.js，需要使用window.my进行判断而非只使用my，否则会报错**
