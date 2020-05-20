@@ -19,9 +19,11 @@ const getInput = (readline, question) => {
   });
 };
 
-const searchMovie = async (rl, movieName = '') => {
-  // const HOME_URL = `http://www.ygdy8.com`;
+getInput(rl, '请输入电影名字：').then((name) => {
+  searchMovie(name, rl);
+});
 
+const searchMovie = async (movieName = '', readline) => {
   try {
     // 将名字转为gbk编码
     const search = iconv
@@ -40,7 +42,6 @@ const searchMovie = async (rl, movieName = '') => {
       headless: true
     });
     const page = await browser.newPage();
-
     page.on('error', (err) => {
       console.log(err);
     });
@@ -55,11 +56,16 @@ const searchMovie = async (rl, movieName = '') => {
       }))
     );
 
+    if (searchContent.length === 0) {
+      console.log('暂无结果');
+      await browser.close();
+      process.exit(0);
+    }
+
     console.log('结果：');
     console.dir(searchContent.map((item, index) => `${index}: ${item.name}`));
 
-    const index = await getInput(rl, '请输入序号：');
-    // const index = 0;
+    const index = await getInput(readline, '请输入序号：');
     console.log('正在查询下载链接……');
     await page.goto(searchContent[index].href, {
       waitUntil: 'domcontentloaded',
@@ -68,8 +74,8 @@ const searchMovie = async (rl, movieName = '') => {
     await page.content();
 
     const indexContent = await page.$$eval('#Zoom table td a', (res) => {
-      return res.map((item, index) => {
-        let attrs = { test: '1' };
+      return res.map((item) => {
+        const attrs = {};
         Object.keys(item.attributes).map((el) => {
           attrs[item.attributes[el].name] = item.attributes[el].value;
         });
@@ -87,9 +93,8 @@ const searchMovie = async (rl, movieName = '') => {
         sourceUrl = indexContent[0].attrs[item];
       }
     });
-    console.dir(`资源名: ${indexContent[0].name}`);
-    console.dir(`下载地址: ${sourceUrl}`);
-    // console.log(page.goto(sourceUrl));
+    console.log(`资源名: ${indexContent[0].name}`);
+    console.log(`下载地址: ${sourceUrl}`);
 
     await browser.close();
     process.exit(0);
@@ -97,21 +102,3 @@ const searchMovie = async (rl, movieName = '') => {
     console.log(err);
   }
 };
-
-getInput(rl, '请输入电影名字：').then((name) => {
-  searchMovie(rl, name);
-});
-
-// (async function() {
-//   try {
-//     const name = await getInput(rl, '请输入电影名字：');
-//     console.log(name);
-
-//     const index = await getInput(rl, '请输入index：');
-//     console.log(index);
-
-//     process.exit(0);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// })();
