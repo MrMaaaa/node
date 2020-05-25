@@ -11,7 +11,7 @@ const PAGE = 'https://a.jd.com';
 
   await page.goto(PAGE);
 
-  await page.evaluate((body) => {
+  await page.evaluate(() => {
     document.documentElement.scrollTop = document.body.clientHeight;
   });
 
@@ -32,7 +32,7 @@ const PAGE = 'https://a.jd.com';
     };
   });
 
-  const writer = fs.createWriteStream('../../node_test/jd_discount.txt');
+  const writer = fs.createWriteStream('./jd_discount.txt');
   writer.write(`优惠券地址：${PAGE}\n`, 'utf8');
   results.body.map((res) => {
     writer.write(`优惠券：${res.name}\n`, 'utf8');

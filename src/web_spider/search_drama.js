@@ -2,7 +2,6 @@ const readline = require('readline');
 const path = require('path');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
-const iconv = require('iconv-lite');
 
 const rl = readline.createInterface({
   input: process.stdin,
