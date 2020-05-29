@@ -5,7 +5,7 @@ const readline = require('readline');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
-const IS_HEADLESS = false;
+const IS_HEADLESS = true;
 
 const URL_MAP = {
   '1': {
