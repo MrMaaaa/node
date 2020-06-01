@@ -48,12 +48,8 @@ const URL_MAP = {
       const ed2ks = [];
       const magnets = [];
       res.map((item, index) => {
-        [ed2ks, magnets][index % 2].push(item.getAttribute('href')); // 秀就完事了
-        // if (index % 2 === 0) {
-        //   ed2ks.push(item.getAttribute('href'));
-        // } else {
-        //   magnets.push(item.getAttribute('href'));
-        // }
+        // 这个网站返回的结果a标签无特殊表示，只能通过奇偶进行区别分类
+        [ed2ks, magnets][index % 2].push(item.getAttribute('href'));
       });
       return {
         ed2ks,
