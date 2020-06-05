@@ -26,8 +26,8 @@ const URL_MAP = {
         thunder: item.getAttribute('thunderhref'),
         ftp: item.innerText,
       })),
-    save_res_handle: (writer, indexContent) => {
-      indexContent.map((item) => {
+    save_res_handle: (writer, res) => {
+      res.map((item) => {
         writer.write(`迅雷：${item.thunder}\n`, 'UTF8');
         writer.write(`FTP：${item.ftp}\n`, 'UTF8');
       });
@@ -56,13 +56,13 @@ const URL_MAP = {
         magnets,
       };
     },
-    save_res_handle: (writer, indexContent) => {
+    save_res_handle: (writer, res) => {
       writer.write(`ed2k:\n\n`, 'UTF8');
-      indexContent.ed2ks.map((item) => {
+      res.ed2ks.map((item) => {
         writer.write(`${item}}\n`, 'UTF8');
       });
       writer.write(`\nmagents:\n\n`, 'UTF8');
-      indexContent.ed2ks.map((item) => {
+      res.ed2ks.map((item) => {
         writer.write(`${item}}\n`, 'UTF8');
       });
     },
