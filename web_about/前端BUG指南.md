@@ -502,18 +502,20 @@
     </pre>
 
 50. **子元素宽度大于视窗宽度时父元素设置margin、padding右侧失效**
-    父元素外层增加一层wrapper
-    .super-wrapper {
-			display: flex;
-			overflow-x: scroll;
-			.super {
-				display: flex;
-				flex-wrap: nowrap;
-				magin: 20px;
-				.sub {
-					width: 1000px;
-				}
-			}
-		}
+    解决：父元素外层增加一层wrapper
+    <pre>
+      .super-wrapper {
+        display: flex;
+        overflow-x: scroll;
+        .super {
+          display: flex;
+          flex-wrap: nowrap;
+          magin: 20px;
+          .sub {
+            width: 1000px;
+          }
+        }
+      }
+    </pre>
 
 51. **很离谱的一件事，暂时只在支付宝ios客户端出现，如果在非小程序端（如生活号）引入了小程序api调用的https://appx/web-view.min.js，需要使用window.my进行判断而非只使用my，否则会报错**
