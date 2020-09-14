@@ -106,7 +106,7 @@ function sendEmail(options) {
 function typeOf(variable) {
   return Object.prototype.toString
     .call(variable)
-    .match(/(?<=\[object\s).+(?=\])/gi)[0]
+    .slice(8, -1)
     .toLowerCase();
 }
 
