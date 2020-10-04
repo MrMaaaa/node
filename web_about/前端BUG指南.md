@@ -519,3 +519,12 @@
     </pre>
 
 51. **很离谱的一件事，暂时只在支付宝ios客户端出现，如果在非小程序端（如生活号）引入了小程序api调用的https://appx/web-view.min.js，需要使用window.my进行判断而非只使用my，否则会报错**
+
+52. **实现上一页（如果是页首到页末），下一页（如果是页末到页首）效果，且不使用三目运算符额外变量等**
+    <pre>
+      // index-当前的索引 list-当前的swiper数组 len-list.length
+      // prev
+      (index - 1 + len) % len
+      // next
+      (index + 1) % len
+    </pre>
