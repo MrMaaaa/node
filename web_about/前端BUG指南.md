@@ -67,7 +67,7 @@
 7.  **阻止 iOS 弹簧效果**
 
     <pre>
-      body {  
+      body {
         position: fixed;
         top: 0;
         left: 0;
@@ -121,8 +121,7 @@
 14. **隐藏滚动条**
 
     <pre>
-      ::-webkit-scrollbar
-      {
+      ::-webkit-scrollbar {
         height: 0;
         width: 0;
       }
@@ -131,12 +130,10 @@
 15. **flex 元素定宽与自适应**
 
     <pre>
-      .a
-      {
+      .a {
         flex-shrink: 0;
       }
-      .b
-      {
+      .b {
         width: 1px;
         flex-grow: 1;
       }
@@ -159,12 +156,12 @@
     <pre>
       iframe.onload = () => {
         // 这里如果使用iframe可能会导致无法获取到元素
-          document
+        document
           .getElementById('iframe')
           .contentWindow.document.getElementById('now_submit').style.visibility =
           'hidden';
     
-        }
+      }
     </pre>
 
 19. **iframe 会在 src 为空或者任意值时加载一次，如果动态修改 src 地址，会加载两次，因此需要动态创建 iframe 然后 append 到 body 中**
@@ -198,12 +195,12 @@
 24. **js 输出变量原始类型**
 
     <pre>
-      typeof(value) {
+      function typeOf(value) {
         return Object.prototype.toString
         .call(value)
         .slice(8, -1)
         .toLowerCase();
-      },
+      }
     </pre>
 
 25. **防止横屏时的文字缩放**
@@ -296,17 +293,17 @@
 32. **适配 iPhone X**
 
     <pre>
-      body {  
+      body {
         padding:
           constant(safe-area-inset-top)
           constant(safe-area-inset-right)
           constant(safe-area-inset-bottom)
-          constant(safe-area-inset-left);  
+          constant(safe-area-inset-left);
       }
       /* 横屏： */
-      safe-area-inset-top = 0  
-      safe-area-inset-right = 44px  
-      safe-area-inset-bottom = 21px  
+      safe-area-inset-top = 0
+      safe-area-inset-right = 44px
+      safe-area-inset-bottom = 21px
       safe-area-inset-left = 44px
       /* 竖屏： */
       safe-area-inset-top = 0
@@ -519,3 +516,5 @@
     </pre>
 
 51. **很离谱的一件事，暂时只在支付宝ios客户端出现，如果在非小程序端（如生活号）引入了小程序api调用的https://appx/web-view.min.js，需要使用window.my进行判断而非只使用my，否则会报错**
+
+52. **取消一个fetch请求** [AbortController API](https://developer.mozilla.org/zh-CN/docs/Web/API/FetchController)

@@ -36,9 +36,9 @@ function traverse(dir, callback, finish, isDeepTraverse = true) {
       if (i < files.length) {
         const pathname = path.join(dir, files[i]);
 
-        fs.stat(pathname, function(err, stats) {
+        fs.stat(pathname, function (err, stats) {
           if (stats.isDirectory() && isDeepTraverse) {
-            traverse(pathname, callback, function() {
+            traverse(pathname, callback, function () {
               next(i + 1);
             });
           } else {
@@ -67,8 +67,8 @@ function sendEmail(options) {
     port: 587, //腾讯端口为465或587
     auth: {
       user: 'tenfyma@foxmail.com',
-      pass: 'otiiohqmkqnfbeii'
-    }
+      pass: 'otiiohqmkqnfbeii',
+    },
   });
 
   //设置邮箱内容
@@ -77,7 +77,7 @@ function sendEmail(options) {
     to: options.to, //收件人，多个收件人用逗号隔开
     subject: options.title, //标题
     text: options.text, //文本格式内容
-    html: options.html //html格式内容
+    html: options.html, //html格式内容
     /*attachments: [{ //上传附件
       filename: 'json',
       path: './add.html'
@@ -104,10 +104,7 @@ function sendEmail(options) {
  * @return {String} 变量类型
  */
 function typeOf(variable) {
-  return Object.prototype.toString
-    .call(variable)
-    .slice(8, -1)
-    .toLowerCase();
+  return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
 }
 
 /**
@@ -126,16 +123,16 @@ function escapeRegExp(string) {
  * @return {Object} 如果含参数，返回该方法，否则返回计算结果
  */
 function add(...args) {
-  const fn = function(...arg_fn) {
+  const fn = function (...arg_fn) {
     if (arg_fn.length === 0) {
       return args.reduce((a, b) => a + b);
     }
     return add.apply(null, args.concat(arg_fn));
   };
-  fn.valueOf = function() {
+  fn.valueOf = function () {
     return args.reduce((a, b) => a + b);
   };
-  fn.toString = function() {
+  fn.toString = function () {
     return args.reduce((a, b) => a + b);
   };
   return fn;
@@ -147,6 +144,7 @@ function add(...args) {
  * @param {String|Number} max 最大值
  * @return {Number} 随机数
  */
+
 function randomBetween(min, max, type = 2) {
   if (!/^\d{1,}$/.test(min) || !/^\d{1,}$/.test(max)) {
     throw new Error('无效的数字');
@@ -182,26 +180,21 @@ function randomBetween(min, max, type = 2) {
  */
 function toRGB(color) {
   const reg = /#([0-9a-f]{3}){1,2}/gi;
-  if (reg.test(color)) {
-    color = color.replace('#', '');
-    if (color.length === 3) {
-      color = color
-        .split('')
-        .map((item) => item + item)
-        .join('');
-    }
-    return (
-      'rgb(' +
-      color
-        .split(/(.{2})/gi)
-        .filter((item) => item)
-        .map((item) => parseInt(item, 16))
-        .join(',') +
-      ')'
-    );
-  } else {
-    return '';
+
+  if (!reg.test(color)) return '';
+
+  color = color.replace('#', '');
+  if (color.length === 3) {
+    color = color
+      .split('')
+      .map((item) => item + item)
+      .join('');
   }
+  return `rgb(${color
+    .split(/(.{2})/gi)
+    .filter((item) => item)
+    .map((item) => parseInt(item, 16))
+    .join(',')})`;
 }
 
 /**
@@ -242,5 +235,5 @@ exports = module.exports = {
   add,
   randomBetween,
   download,
-  toRGB
+  toRGB,
 };
