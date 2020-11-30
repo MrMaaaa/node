@@ -527,3 +527,13 @@
       // next
       (index + 1) % len
     </pre>
+
+54. **获取首屏加载时间**
+    <pre>
+      console.log(new Date() - performance.timing.navigationStart);
+    </pre>
+
+55. **ios滚动优化**
+    <pre>
+      -webkit-overflow-scrolling: touch;
+    </pre>
