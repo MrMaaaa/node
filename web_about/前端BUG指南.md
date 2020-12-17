@@ -537,3 +537,15 @@
     <pre>
       -webkit-overflow-scrolling: touch;
     </pre>
+
+56. **一个正则全局匹配的bug**
+    正则里有一个lastIndex的属性，是下一次匹配的开始位置。
+    <pre>
+      var re = /\d/g;
+      console.log( re.test('1'), re.lastIndex ); // true 1
+      console.log( re.test('1'), re.lastIndex ); // false 0
+      console.log( re.test('1'), re.lastIndex ); // true 1
+      console.log( re.test('1'), re.lastIndex ); // false 0
+    </pre>
+    把正则后边的"g"去掉就会一直为true，因为它直接用正则字面量，相当于每次重新创建一个正则对象。
+    正则的exec方法也同上。
